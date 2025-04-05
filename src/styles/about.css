@@ -1,0 +1,66 @@
+/* Sección Sobre Nosotros */
+.about {
+    padding: 120px 0; /* Aumentado de 100px a 120px */
+    background-color: var(--verde-claro); /* Usando la variable de verde claro */
+    margin-bottom: 40px;
+    border-radius: 15px;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; /* Aumentado de 60px a 80px */
+    align-items: center;
+}
+
+.about-image {
+    width: 100%;
+    height: 400px;
+    background-color: #616161;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden; /* Evita desbordamientos */
+}
+
+.about-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* La imagen cubre todo el contenedor */
+    border-radius: 12px; /* Asegura que coincida con el borde del contenedor */
+}
+
+.about-text h2 {
+    font-size: 50px;
+    margin-bottom: 35px; /* Aumentado de 30px a 35px */
+}
+
+.about-text p {
+    margin-bottom: 25px; /* Aumentado de 20px a 25px */
+    color: #f8f8f8; /* Cambiado de #1f1f1f a #f8f8f8 para mejor contraste */
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Ajustar el botón en about */
+.about-text .btn {
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .about {
+        padding: 100px 0;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+    
+    .about-text h2 {
+        font-size: 40px;
+    }
+}

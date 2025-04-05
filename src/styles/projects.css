@@ -1,0 +1,236 @@
+/* Sección Proyectos */
+.projects {
+    padding: 100px 0 120px; /* Aumentado el padding inferior */
+    margin-bottom: 30px;
+}
+
+/* Estilos del contenedor del carrusel */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Estilos del carrusel */
+.project-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
+    -ms-overflow-style: none; /* Ocultar scrollbar en IE y Edge */
+    gap: 50px;
+    padding: 10px 0;
+    width: 100%;
+    cursor: grab;
+    will-change: transform, scroll-position; /* Mejora el rendimiento */
+}
+
+/* Ocultar scrollbar en Chrome, Safari y Opera */
+.project-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.project-carousel:active {
+    cursor: grabbing;
+}
+
+/* Controles del carrusel */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.carousel-control:hover {
+    background-color: rgba(114, 114, 114, 0.5);
+}
+
+.carousel-control.prev {
+    left: -20px;
+}
+
+.carousel-control.next {
+    right: -20px;
+}
+
+/* Barra deslizante del carrusel */
+.carousel-slider-container {
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.carousel-slider {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    outline: none;
+}
+
+/* Estilo para el "pulgar" de la barra deslizante */
+.carousel-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.carousel-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.carousel-slider::-webkit-slider-thumb:hover,
+.carousel-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Estilo de las tarjetas de proyecto */
+.project-card {
+    flex: 0 0 auto;
+    width: 350px;
+    background-color: var(--verde-oscuro);
+    border-radius: 19px; /* Aumentado de 8px a 12px */
+    overflow: hidden;
+    box-shadow: 0 9px 10px rgba(0, 0, 0, 0.15); /* Sombra mejorada */
+    transition: transform 0.3s ease;
+    will-change: transform; /* Mejora el rendimiento para animaciones */
+    contain: layout paint style; /* Mejora el rendimiento */
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+}
+
+.project-image {
+    width: 100%;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.horse-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .horse-image {
+    transform: scale(1.05);
+}
+
+.project-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.project-info {
+    padding: 30px; /* Aumentado de 25px a 30px */
+}
+
+.project-info h3 {
+    font-size: 22px;
+    margin-bottom: 15px; /* Aumentado de 10px a 15px */
+}
+
+.project-info p {
+    color: #ffffff;
+    margin-bottom: 20px; /* Aumentado de 15px a 20px */
+    min-height: 80px; /* Altura mínima para mantener consistencia */
+}
+
+.project-info a {
+    color: #a1a1a1;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.project-info a:after {
+    content: "→";
+    margin-left: 5px;
+    transition: all 0.3s ease;
+}
+
+.project-info a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.project-info a:hover:after {
+    margin-left: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .projects {
+        padding: 80px 0 100px;
+    }
+
+    .project-card {
+        width: 300px;
+    }
+    
+    .carousel-control {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .carousel-control.prev {
+        left: -10px;
+    }
+    
+    .carousel-control.next {
+        right: -10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-card {
+        width: 280px;
+    }
+    
+    .project-info p {
+        min-height: 100px;
+    }
+}
