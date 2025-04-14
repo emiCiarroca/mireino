@@ -14,7 +14,7 @@ import Salome from "../assets/imagenes/Salome.webp";
 import Torio from "../assets/imagenes/Torio.webp";
 import Zeus from "../assets/imagenes/Zeus.webp";
 
-const ProjectSection = ({ showMessage }) => {
+const ProjectSection = ({ showMessage, onShowAdoption }) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [maxSliderValue, setMaxSliderValue] = useState(100);
   const carouselRef = useRef(null);
@@ -22,9 +22,16 @@ const ProjectSection = ({ showMessage }) => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const handleViewProject = (e, projectName) => {
+  const handleViewProject = (e, projectName, horseName) => {
     e.preventDefault();
-    showMessage(`Abriendo proyecto: ${projectName}`, 'info');
+    
+    
+    if (horseName === "Benito") {
+      onShowAdoption();
+      showMessage(`Conoce más sobre ${horseName}`, 'info');
+    } else {
+      showMessage(`Abriendo proyecto: ${projectName}`, 'info');
+    }
   };
 
   const projects = [
@@ -41,7 +48,7 @@ const ProjectSection = ({ showMessage }) => {
     { name: "Zeus", title: "Potrillo de 3 meses", description: "Tan tranquilo como orgulloso, está aprendiendo a confiar tras ser rescatado de una situación de abandono.", image: Zeus }
   ];
 
-  // Calcular el valor máximo para el slider basado en el contenido
+  // Calcular el valor máximo para el slider
   useEffect(() => {
     if (carouselRef.current) {
       const updateMaxValue = () => {
@@ -115,7 +122,7 @@ const ProjectSection = ({ showMessage }) => {
       const carousel = carouselRef.current;
       const cardWidth = carousel.querySelector('.project-card').offsetWidth;
       carousel.scrollBy({
-        left: cardWidth + 50, // 50 es el gap entre tarjetas
+        left: cardWidth + 50, // gap entre tarjetas
         behavior: 'smooth'
       });
     }
@@ -126,14 +133,14 @@ const ProjectSection = ({ showMessage }) => {
       const carousel = carouselRef.current;
       const cardWidth = carousel.querySelector('.project-card').offsetWidth;
       carousel.scrollBy({
-        left: -(cardWidth + 50), // 50 es el gap entre tarjetas
+        left: -(cardWidth + 50), //gap entre tarjetas
         behavior: 'smooth'
       });
     }
   };
 
   return (
-    <section id="work" className="projects container">
+    <section id="projects" className="projects container">
       <div className="section-header">
         <h2>Ellos</h2>
         <p>Conoce los equinos activos en el predio</p>
@@ -177,7 +184,7 @@ const ProjectSection = ({ showMessage }) => {
                 <p>{project.description}</p>
                 <a 
                   href="#" 
-                  onClick={(e) => handleViewProject(e, project.title)}
+                  onClick={(e) => handleViewProject(e, project.title, project.name)}
                 >
                   Conocerlo
                 </a>
@@ -195,7 +202,7 @@ const ProjectSection = ({ showMessage }) => {
         </button>
       </div>
       
-      {/* Barra de desplazamiento horizontal en lugar de puntos */}
+      {/* Barra de desplazamiento horizontal */}
       <div className="carousel-slider-container">
         <input 
           type="range"

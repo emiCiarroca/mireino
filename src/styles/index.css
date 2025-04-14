@@ -10,7 +10,13 @@ body {
     line-height: 2;
     color: #ffffff;
     background-color: #525755;
-    padding-top: 80px; /* Añadir padding superior para compensar el navbar fijo */
+    padding-top: 85px; 
+}
+
+:root {
+    --verde-claro: #3c995b; 
+    --verde-medio: #287455; 
+    --verde-oscuro: #294230;
 }
 
 /* Contenedor principal */
@@ -56,10 +62,50 @@ body {
 /* Responsive general */
 @media (max-width: 768px) {
     body {
-        padding-top: 120px; /* Mayor padding para compensar el navbar en modo móvil */
+        padding-top: 120px; 
+        font-size: 15px; 
+        line-height: 1.8; 
+    }
+    
+    .container {
+        padding: 0 15px; 
+    }
+    
+    .section-header {
+        margin-bottom: 40px; 
     }
     
     .section-header h2 {
-        font-size: 32px;
+        font-size: 28px; 
+    }
+    
+    .section-header p {
+        font-size: 16px; 
+    }
+    
+    .btn {
+        padding: 12px 24px; 
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 110px;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+    
+    .section-header h2 {
+        font-size: 24px; 
+    }
+    
+    .section-header p {
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 13px;
     }
 }

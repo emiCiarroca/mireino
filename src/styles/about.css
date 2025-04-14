@@ -1,7 +1,7 @@
 /* Sección Sobre Nosotros */
 .about {
-    padding: 120px 0; /* Aumentado de 100px a 120px */
-    background-color: var(--verde-claro); /* Usando la variable de verde claro */
+    padding: 120px 0; 
+    background-color: #525755;
     margin-bottom: 40px;
     border-radius: 15px;
 }
@@ -9,7 +9,7 @@
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px; /* Aumentado de 60px a 80px */
+    gap: 80px; 
     align-items: center;
 }
 
@@ -22,29 +22,29 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    overflow: hidden; /* Evita desbordamientos */
+    overflow: hidden; 
 }
 
 .about-logo {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* La imagen cubre todo el contenedor */
-    border-radius: 12px; /* Asegura que coincida con el borde del contenedor */
+    object-fit: cover; 
+    border-radius: 12px; 
 }
 
 .about-text h2 {
     font-size: 50px;
-    margin-bottom: 35px; /* Aumentado de 30px a 35px */
+    margin-bottom: 35px; 
 }
 
 .about-text p {
-    margin-bottom: 25px; /* Aumentado de 20px a 25px */
-    color: #f8f8f8; /* Cambiado de #1f1f1f a #f8f8f8 para mejor contraste */
+    margin-bottom: 25px; 
+    color: #f8f8f8; 
     font-size: 16px;
     line-height: 1.8;
 }
 
-/* Ajustar el botón en about */
+
 .about-text .btn {
     margin-top: 10px;
 }

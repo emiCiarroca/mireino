@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import '../styles/cart.css'; // Crearemos este archivo de estilos
+import '../styles/cart.css';
 
 const Cart = ({ isOpen, onClose, cartItems, removeItem, clearCart }) => {
   const cartRef = useRef(null);
@@ -25,7 +25,7 @@ const Cart = ({ isOpen, onClose, cartItems, removeItem, clearCart }) => {
     };
   }, [isOpen, onClose]);
 
-  // Si el carrito no está abierto, no renderizamos nada
+  // Si el carrito no está abierto, no renderiza
   if (!isOpen) return null;
 
   return (

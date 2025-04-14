@@ -41,7 +41,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 1,
       name: "Camiseta Solidaria",
-      price: 2500.99,
+      price: 1500.00,
       category: "clothing",
       description: "Camiseta 100% algodón orgánico con el logo de nuestra ONG.",
       image: camiseta
@@ -49,7 +49,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 2,
       name: "Buzo Mi Reino Por Un Caballo",
-      price: 3900.99,
+      price: 39000.00,
       category: "clothing",
       description: "Buzo cálido y cómodo para los amantes de los caballos.",
       image: buzo
@@ -57,7 +57,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 3,
       name: "Gorra con Diseño ONG",
-      price: 1800.50,
+      price: 2800.00,
       category: "clothing",
       description: "Gorra con visera para protegerte del sol durante las actividades al aire libre.",
       image: gorra
@@ -65,7 +65,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 4,
       name: "Pulsera Solidaria",
-      price: 200.99,
+      price: 500.00,
       category: "accessories",
       description: "Pulsera artesanal hecha por nuestros voluntarios.",
       image: pulsera
@@ -73,7 +73,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 5,
       name: "Llavero Caballo",
-      price: 800.99,
+      price: 800.00,
       category: "accessories",
       description: "Llavero con forma de caballo, cada compra ayuda a nuestros rescates.",
       image: llavero
@@ -81,7 +81,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 6,
       name: "Botella de Agua Reutilizable",
-      price: 1500.99,
+      price: 2500.00,
       category: "accessories",
       description: "Botella ecológica con diseño de caballos salvajes.",
       image: botelladeagua
@@ -89,7 +89,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 7,
       name: "Vaso térmico con logo ONG",
-      price: 8900.99,
+      price: 2900.00,
       category: "accessories",
       description: "Vaso de plástico térmico con logo de nuestra ONG.",
       image: vasotermico
@@ -97,7 +97,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 8,
       name: "Calcomanía de caballos",
-      price: 2200.50,
+      price: 600.00,
       category: "accessories",
       description: "Calcomanias varias de caballos o logo ONG",
       image: sticker
@@ -105,7 +105,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 9,
       name: "Jabón Liquido de tocador",
-      price: 4500.99,
+      price: 1500.00,
       category: "accessories",
       description: "Botella x250cc aromas varios",
       image: botellajaobn
@@ -113,7 +113,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 10,
       name: "Bolsa reutilizable con nuestro logo",
-      price: 600.99,
+      price: 500.00,
       category: "accessories",
       description: "Bolsa reutilizable, reforzada con diseño de nuestra ONG",
       image: bolsa
@@ -121,7 +121,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 11,
       name: "Cuadernillo Hojas rayadas'",
-      price: 2900.99,
+      price: 2900.00,
       category: "books",
       description: "Cuadernillo con imágenes de caballos",
       image: cuadernillo
@@ -129,7 +129,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 12,
       name: "Docena de Empanadas Veganas",
-      price: 2400.50,
+      price: 12400.00,
       category: "supplies",
       description: "12 Empanadas de verduras",
       image: empanadas
@@ -137,7 +137,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 13,
       name: "Calendario 2025",
-      price: 1900.99,
+      price: 1900.00,
       category: "accessories",
       description: "Calendario con fotografías de nuestros caballos rescatados.",
       image: calendario
@@ -145,7 +145,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 14,
       name: "Taza Cerámica",
-      price: 1400.99,
+      price: 5400.00,
       category: "accessories",
       description: "Taza de cerámica con diseño exclusivo de nuestra ONG.",
       image: taza
@@ -153,7 +153,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 15,
       name: "Cuaderno de Notas",
-      price: 900.99,
+      price: 2900.00,
       category: "books",
       description: "Block de Hojas lisas para dibujo",
       image: blockdenotas
@@ -161,7 +161,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 16,
       name: "Docena de Alfajores de Maicena'",
-      price: 3400.99,
+      price: 3400.00,
       category: "supplies",
       description: "12 Riquisimos alfajores de maicena con dulce de leche",
       image: alfajores
@@ -169,7 +169,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 17,
       name: "Musculosa Mi reino",
-      price: 29000.99,
+      price: 9000.00,
       category: "clothing",
       description: "Remera de algodón con el logo de nuestra organización.",
       image: musculosa
@@ -177,7 +177,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 18,
       name: "Vela aromática",
-      price: 9700.50,
+      price: 1700.00,
       category: "accessories",
       description: "Vela artesanal con esencias variás",
       image: vela
@@ -185,7 +185,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 19,
       name: "Vaso de plastico con diseño",
-      price: 1100.99,
+      price: 1100.00,
       category: "accessories",
       description: "Vaso de 500cc boca hancha con diseños",
       image: vasoplastico
@@ -193,7 +193,7 @@ const ShopSection = ({ showMessage }) => {
     {
       id: 20,
       name: "Apoya Vasos con logo de la ONG",
-      price: 200.99,
+      price: 200.00,
       category: "accessories",
       description: "Circular, varios diseños",
       image: apoyavasos

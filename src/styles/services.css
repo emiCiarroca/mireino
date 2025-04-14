@@ -1,26 +1,26 @@
 /* Sección Servicios */
 .services {
-    padding: 100px 0 120px; /* Aumentado el padding inferior */
-    background-color: var(--verde-medio); /* Usando la variable de verde medio */
-    border-radius: 15px; /* Aumentado de 10px a 15px */
+    padding: 100px 0 120px; 
+    background-color: #525755;
+    border-radius: 15px; 
     margin-bottom: 40px;
 }
 
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 40px; /* Aumentado de 30px a 40px */
+    gap: 40px; 
 }
 
 .service-card {
-    background-color: rgba(255, 255, 255, 0.08); /* Ligeramente más visible */
-    border-radius: 12px; /* Aumentado de 8px a 12px */
-    padding: 35px; /* Aumentado de 30px a 35px */
+    background-color: rgba(255, 255, 255, 0.08); 
+    border-radius: 12px; 
+    padding: 35px; 
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+    height: 100%; 
 }
 
 .service-card:hover {
@@ -29,13 +29,13 @@
 }
 
 .service-icon {
-    font-size: 45px; /* Aumentado de 40px a 45px */
-    margin-bottom: 25px; /* Aumentado de 20px a 25px */
+    font-size: 45px; 
+    margin-bottom: 25px; 
 }
 
 .service-card h3 {
     font-size: 22px;
-    margin-bottom: 20px; /* Aumentado de 15px a 20px */
+    margin-bottom: 20px; 
     color: #ffffff;
 }
 

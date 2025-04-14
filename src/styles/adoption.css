@@ -1,0 +1,290 @@
+/* Sección de Adopción */
+.adoption {
+    padding: 100px 0 120px;
+    margin-bottom: 40px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.adoption.closing {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.adoption-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.adoption-header h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.adoption-header p {
+    font-size: 18px;
+    color: #d3d3d3;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+
+.horse-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+
+.horse-gallery {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.main-image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.thumbnail-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: calc(25% - 8px);
+    height: 80px;
+    border-radius: 8px;
+    cursor: pointer;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail:hover {
+    opacity: 0.8;
+}
+
+
+.horse-info {
+    background-color: var(--verde-oscuro);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.horse-info h3 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.horse-details {
+    margin-bottom: 20px;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.detail-label {
+    font-weight: 700;
+    width: 120px;
+    color: #a1a1a1;
+}
+
+.detail-value {
+    color: #ffffff;
+}
+
+.horse-description {
+    margin-bottom: 20px;
+    color: #d3d3d3;
+    line-height: 1.8;
+}
+
+
+.adoption-requirements {
+    background-color: var(--verde-oscuro);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.adoption-requirements h4 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.requirements-list {
+    list-style-type: none;
+}
+
+.requirements-list li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+    color: #d3d3d3;
+}
+
+.requirements-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--verde-claro);
+    font-weight: bold;
+}
+
+
+.testimonial {
+    background-color: var(--verde-oscuro);
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial::before {
+    content: "\201C";
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 80px;
+    color: rgba(255, 255, 255, 0.1);
+    font-family: Georgia, serif;
+}
+
+.testimonial-content {
+    padding-left: 30px;
+    font-style: italic;
+    color: #d3d3d3;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.testimonial-author {
+    text-align: right;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+
+.adoption-cta {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.adoption-cta p {
+    margin-bottom: 25px;
+    font-size: 18px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #d3d3d3;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.cta-btn {
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: none; 
+    cursor: pointer; 
+}
+
+
+.cta-btn.primary:hover {
+    background-color: var(--verde-claro);
+    transform: translateY(-2px);
+}
+
+
+.cta-btn.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .adoption {
+        padding: 80px 0 100px;
+    }
+    
+    .adoption-header h2 {
+        font-size: 36px;
+    }
+    
+    
+    .horse-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+    
+    .main-image {
+        height: 300px;
+    }
+    
+    .thumbnail {
+        height: 60px;
+    }
+    
+    .horse-info, .adoption-requirements, .testimonial {
+        padding: 25px;
+    }
+    
+    .horse-info h3 {
+        font-size: 28px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .adoption-header h2 {
+        font-size: 30px;
+    }
+    
+    .main-image {
+        height: 250px;
+    }
+    
+    .thumbnail {
+        height: 50px;
+    }
+    
+    .horse-info h3 {
+        font-size: 24px;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .detail-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

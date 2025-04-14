@@ -1,5 +1,5 @@
 import '../styles/hero.css'
-import HeroImage from "../assets/imagenes/Hero.webp"; // Importación de la imagen de fondo
+import HeroImage from "../assets/imagenes/Hero.webp"; // imagen de fondo
 
 const Hero = ({ showMessage }) => {
   const handleViewWorkClick = (e) => {
@@ -23,7 +23,7 @@ const Hero = ({ showMessage }) => {
           backgroundRepeat: "no-repeat"
         }}
       >
-        {/* Puedes agregar una capa oscura para mejorar la legibilidad del texto */}
+        
         <div className="hero-overlay"></div>
       </div>
 

@@ -1,5 +1,5 @@
 import '../styles/about.css';
-import logoImage from '../assets/imagenes/logo2.webp'; // Importamos la imagen
+import logoImage from '../assets/imagenes/logo2.webp'; 
 
 const AboutSection = ({ showMessage }) => {
   const handleGetInTouchClick = (e) => {

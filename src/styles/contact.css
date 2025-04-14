@@ -1,29 +1,29 @@
 /* Contacto */
 .contact {
-    padding: 100px 0 120px; /* Aumentado el padding inferior */
+    padding: 100px 0 120px; 
     margin-bottom: 40px;
 }
 
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px; /* Aumentado de 60px a 80px */
+    gap: 80px; 
 }
 
 .contact-form input,
 .contact-form textarea {
     width: 100%;
-    padding: 18px; /* Aumentado de 15px a 18px */
-    margin-bottom: 25px; /* Aumentado de 20px a 25px */
+    padding: 18px; 
+    margin-bottom: 25px; 
     border: 1px solid #6e6e6e;
-    border-radius: 8px; /* Aumentado de 4px a 8px */
+    border-radius: 8px; 
     font-size: 16px;
     background-color: rgba(0, 0, 0, 0.05);
     color: #ffffff;
 }
 
 .contact-form textarea {
-    height: 180px; /* Aumentado de 150px a 180px */
+    height: 180px; 
     resize: vertical;
 }
 
@@ -33,7 +33,7 @@
     border: none;
     padding: 15px 30px;
     font-size: 16px;
-    border-radius: 8px; /* Aumentado de 4px a 8px */
+    border-radius: 8px; 
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -50,12 +50,12 @@
 }
 
 .contact-info h3 {
-    font-size: 26px; /* Aumentado de 24px a 26px */
-    margin-bottom: 25px; /* Aumentado de 20px a 25px */
+    font-size: 26px; 
+    margin-bottom: 25px; 
 }
 
 .contact-info p {
-    margin-bottom: 20px; /* Aumentado de 15px a 20px */
+    margin-bottom: 20px; 
     color: #d3d3d3;
     font-size: 16px;
     line-height: 1.7;
@@ -73,6 +73,6 @@
     }
     
     .contact-info {
-        order: -1; /* Mostrar la información antes del formulario en móviles */
+        order: -1; 
     }
 }
