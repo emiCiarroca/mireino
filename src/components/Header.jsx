@@ -17,6 +17,9 @@ function Header() {
           <a href="https://www.instagram.com/mi.reino.por.un.caballo/" target="_blank" rel="noopener noreferrer" className="social-icon">
             <i className="fab fa-instagram"></i>
           </a>
+          <a href="https://www.facebook.com/mireinoporuncaballoparana" target="_blank" rel="noopener noreferrer" className="social-icon">
+             <i className="fab fa-facebook-f"></i>
+          </a>
         </nav>
       </div>
     </header>

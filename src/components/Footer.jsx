@@ -23,7 +23,7 @@ const Footer = ({ showMessage }) => {
             <h3>Mi Reino Por Un Caballo</h3>
             <ul>
               <li><a href="#about">Nosotros</a></li>
-              <li><a href="#work">Nuestro Trabajo</a></li>
+              <li><a href="#projects">Ellos</a></li>
               <li><a href="#services">Servicios</a></li>
               <li><a href="#shop">Tienda</a></li>
               <li><a href="#contact">Contacto</a></li>
@@ -49,8 +49,8 @@ const Footer = ({ showMessage }) => {
             </ul>
           </div>
           <div className="footer-column">
-            <h3>Newsletter</h3>
-            <p>Suscríbete a nuestro newsletter para recibir novedades.</p>
+            <h3>Donaciones Mensuales</h3>
+            <p>Si queres ayudar con montos fijos por mes dejanos tu correo y nosotros te contactamos</p>
             <form onSubmit={handleSubscribe}>
               <input 
                 type="email" 
@@ -65,8 +65,7 @@ const Footer = ({ showMessage }) => {
         <div className="footer-bottom">
           <p>© 2025 Mi Reino Por Un Caballo. Todos los derechos reservados.</p>
           <div className="social-links">
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>           
             <a href="#">Facebook</a>
           </div>
         </div>

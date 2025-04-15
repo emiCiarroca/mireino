@@ -116,7 +116,7 @@
 .project-card {
     flex: 0 0 auto;
     width: 350px;
-    background-color: var(--verde-oscuro);
+    background-color: var(--gris-oscuro);
     border-radius: 19px; 
     overflow: hidden;
     box-shadow: 0 9px 10px rgba(0, 0, 0, 0.15); 

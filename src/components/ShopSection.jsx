@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styles/shop.css';
 import Cart from './Cart'; // Importamos el componente Cart
+import ProductDetail from './ProductDetail'; // Importamos el nuevo componente
 
 // Importar imágenes desde la carpeta /src/assets/imagenes
 import alfajores from '/src/assets/imagenes/alfajores.webp';
@@ -28,6 +29,8 @@ const ShopSection = ({ showMessage }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   
   const categories = [
     { id: 'all', name: 'Todos los productos' },
@@ -230,6 +233,15 @@ const ShopSection = ({ showMessage }) => {
     showMessage('Carrito vaciado', 'info');
   };
   
+  const openProductDetail = (product) => {
+    setSelectedProduct(product);
+    setIsProductDetailOpen(true);
+  };
+  
+  const closeProductDetail = () => {
+    setIsProductDetailOpen(false);
+  };
+  
   return (
     <section id="shop" className="shop">
       <div className="container">
@@ -261,7 +273,7 @@ const ShopSection = ({ showMessage }) => {
         
         <div className="shop-grid">
           {filteredProducts.map(product => (
-            <div key={product.id} className="product-card">
+            <div key={product.id} className="product-card" onClick={() => openProductDetail(product)}>
               <div className="product-image">
                 <img src={product.image} alt={product.name} />
               </div>
@@ -272,7 +284,10 @@ const ShopSection = ({ showMessage }) => {
                   <span className="product-price">${product.price.toFixed(2)}</span>
                   <button 
                     className="add-to-cart-btn"
-                    onClick={() => addToCart(product)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Evitar que se abra el detalle al hacer clic en el botón
+                      addToCart(product);
+                    }}
                   >
                     Añadir
                   </button>
@@ -300,6 +315,14 @@ const ShopSection = ({ showMessage }) => {
         cartItems={cart} 
         removeItem={removeFromCart}
         clearCart={clearCart}
+      />
+
+      {/* Componente de Detalle del Producto */}
+      <ProductDetail
+        isOpen={isProductDetailOpen}
+        onClose={closeProductDetail}
+        product={selectedProduct}
+        addToCart={addToCart}
       />
     </section>
   );

@@ -7,7 +7,7 @@ const Hero = ({ showMessage }) => {
     showMessage('Explorando nuestros proyectos...', 'success');
     
     setTimeout(() => {
-      document.querySelector('#work').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
     }, 800);
   };
 
@@ -34,7 +34,7 @@ const Hero = ({ showMessage }) => {
             Nuestra ONG se dedica a rescatar caballos maltratados, brindándoles un espacio seguro
             donde pueden sanar tanto física como emocionalmente.
           </p>
-          <a href="#work" className="btn" onClick={handleViewWorkClick}>
+          <a href="#projects" className="btn" onClick={handleViewWorkClick}>
             Conoce nuestro trabajo
           </a>
         </div>
