@@ -1,0 +1,276 @@
+/* Estilos para el detalle de servicio */
+.service-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .service-detail-container {
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    background-color: #525755;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    animation: zoomIn 0.3s ease;
+    overflow: hidden;
+  }
+  
+  @keyframes zoomIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  .service-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(82, 87, 85, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .service-detail-header h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin: 0;
+  }
+  
+  .close-detail-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .close-detail-btn:hover {
+    color: #ffffff;
+    opacity: 0.7;
+  }
+  
+  .service-detail-content {
+    display: flex;
+    overflow-y: auto;
+    max-height: calc(90vh - 70px); 
+    padding: 20px;
+  }
+  
+  .service-detail-gallery {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .service-main-image {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .service-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .service-thumbnails {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  
+  .service-thumbnail {
+    width: 70px;
+    height: 70px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .service-thumbnail:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  
+  .service-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .service-detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .service-detail-description {
+    margin-bottom: 30px;
+  }
+  
+  .service-detail-description h3 {
+    font-size: 20px;
+    margin: 0 0 15px;
+    color: #ffffff;
+  }
+  
+  .service-icon-large {
+    font-size: 48px;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .service-detail-description p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #d3d3d3;
+    margin-bottom: 15px;
+  }
+  
+  .service-detail-description ul {
+    color: #d3d3d3;
+    line-height: 1.6;
+    margin: 0 0 20px 20px;
+    padding: 0;
+  }
+  
+  .service-detail-description li {
+    margin-bottom: 8px;
+  }
+  
+  .service-detail-footer {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .contact-about-service,
+  .adoption-process-btn,
+  .volunteer-service-btn {
+    flex: 1;
+    padding: 12px 20px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .contact-about-service {
+    background-color: var(--verde-claro, #4a7c59);
+    color: #ffffff;
+  }
+  
+  .contact-about-service:hover {
+    background-color: var(--verde-oscuro, #345e41);
+    transform: translateY(-2px);
+  }
+  
+  .adoption-process-btn,
+  .volunteer-service-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .adoption-process-btn:hover,
+  .volunteer-service-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .service-detail-content {
+      flex-direction: column;
+    }
+    
+    .service-detail-gallery {
+      padding-right: 0;
+      margin-bottom: 20px;
+    }
+    
+    .service-main-image {
+      height: 200px;
+    }
+    
+    .service-thumbnail {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .service-detail-footer {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .service-detail-container {
+      width: 95%;
+      max-height: 95vh;
+    }
+    
+    .service-detail-header h2 {
+      font-size: 20px;
+    }
+    
+    .service-detail-content {
+      padding: 15px;
+    }
+    
+    .service-main-image {
+      height: 180px;
+    }
+    
+    .service-thumbnail {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .service-icon-large {
+      font-size: 36px;
+    }
+    
+    .service-detail-description h3 {
+      font-size: 18px;
+    }
+    
+    .service-detail-description p {
+      font-size: 14px;
+    }
+    
+    .contact-about-service,
+    .adoption-process-btn,
+    .volunteer-service-btn {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+  }

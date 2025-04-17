@@ -19,6 +19,7 @@ import './styles/services.css'
 import './styles/shop.css'
 import './styles/cart.css'
 import './styles/product-detail.css'
+import './styles/service-detail.css'
 import './styles/adoption.css'
 
 function App() {

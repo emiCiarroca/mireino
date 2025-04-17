@@ -65,8 +65,8 @@ const Footer = ({ showMessage }) => {
         <div className="footer-bottom">
           <p>© 2025 Mi Reino Por Un Caballo. Todos los derechos reservados.</p>
           <div className="social-links">
-            <a href="#">Instagram</a>           
-            <a href="#">Facebook</a>
+            <a href="https://www.instagram.com/mi.reino.por.un.caballo/">Instagram</a>           
+            <a href="https://www.facebook.com/mireinoporuncaballoparana">Facebook</a>
           </div>
         </div>
       </div>
