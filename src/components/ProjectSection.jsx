@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/projects.css';
+import useDragScroll from '../hooks/useDragScroll';
 
 // Importación de imágenes
 import Benito from "../assets/imagenes/Benito.webp";
@@ -17,20 +18,27 @@ import Zeus from "../assets/imagenes/Zeus.webp";
 const ProjectSection = ({ showMessage, onShowAdoption }) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [maxSliderValue, setMaxSliderValue] = useState(100);
-  const carouselRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  
+  // Usar el hook personalizado para manejar el arrastre
+  const {
+    isDragging,
+    dragRef,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd,
+    isClick,
+    scrollNext,
+    scrollPrev
+  } = useDragScroll();
 
-  const handleViewProject = (e, projectName, horseName) => {
+  const handleViewProject = (e, project) => {
     e.preventDefault();
+    e.stopPropagation();
     
-    
-    if (horseName === "Benito") {
-      onShowAdoption();
-      showMessage(`Conoce más sobre ${horseName}`, 'info');
-    } else {
-      showMessage(`Abriendo proyecto: ${projectName}`, 'info');
+    // Solo activar si es un clic y no un arrastre
+    if (isClick()) {
+      onShowAdoption(project.name);
+      showMessage(`Conoce más sobre ${project.name}`, 'info');
     }
   };
 
@@ -50,9 +58,9 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
 
   // Calcular el valor máximo para el slider
   useEffect(() => {
-    if (carouselRef.current) {
+    if (dragRef.current) {
       const updateMaxValue = () => {
-        const carousel = carouselRef.current;
+        const carousel = dragRef.current;
         const scrollWidth = carousel.scrollWidth;
         const clientWidth = carousel.clientWidth;
         
@@ -78,64 +86,16 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
     const value = parseInt(e.target.value, 10);
     setSliderValue(value);
     
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = value;
+    if (dragRef.current) {
+      dragRef.current.scrollLeft = value;
     }
   };
 
   // Actualizar el slider cuando se desplaza el carrusel
   const handleCarouselScroll = () => {
-    if (carouselRef.current) {
-      const currentScroll = carouselRef.current.scrollLeft;
+    if (dragRef.current) {
+      const currentScroll = dragRef.current.scrollLeft;
       setSliderValue(currentScroll);
-    }
-  };
-
-  // Función para manejar el inicio del arrastre
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - carouselRef.current.offsetLeft);
-    setScrollLeft(carouselRef.current.scrollLeft);
-    // Cambiar el cursor durante el arrastre
-    document.body.style.cursor = 'grabbing';
-  };
-
-  // Función para manejar el movimiento durante el arrastre
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Multiplicador para ajustar la velocidad
-    carouselRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Función para manejar el fin del arrastre
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    // Restaurar el cursor
-    document.body.style.cursor = 'default';
-  };
-
-  // Scroll con botones
-  const scrollToNext = () => {
-    if (carouselRef.current) {
-      const carousel = carouselRef.current;
-      const cardWidth = carousel.querySelector('.project-card').offsetWidth;
-      carousel.scrollBy({
-        left: cardWidth + 50, // gap entre tarjetas
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const scrollToPrev = () => {
-    if (carouselRef.current) {
-      const carousel = carouselRef.current;
-      const cardWidth = carousel.querySelector('.project-card').offsetWidth;
-      carousel.scrollBy({
-        left: -(cardWidth + 50), //gap entre tarjetas
-        behavior: 'smooth'
-      });
     }
   };
 
@@ -149,7 +109,7 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
       <div className="carousel-container">
         <button 
           className="carousel-control prev" 
-          onClick={scrollToPrev}
+          onClick={() => scrollPrev()}
           aria-label="Anterior"
         >
           &#10094;
@@ -157,15 +117,19 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
         
         <div 
           className="project-carousel" 
-          ref={carouselRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
+          ref={dragRef}
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
           onScroll={handleCarouselScroll}
         >
           {projects.map((project, index) => (
-            <div className="project-card" key={index}>
+            <div 
+              className="project-card" 
+              key={index}
+              onClick={(e) => handleViewProject(e, project)}
+            >
               <div className="project-image">
                 <img 
                   src={project.image || `/api/placeholder/350/250`}
@@ -182,12 +146,9 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
               <div className="project-info">
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
-                <a 
-                  href="#" 
-                  onClick={(e) => handleViewProject(e, project.title, project.name)}
-                >
-                  Conocerlo
-                </a>
+                <div className="card-overlay">
+                  <span>Ver detalles</span>
+                </div>
               </div>
             </div>
           ))}
@@ -195,7 +156,7 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
         
         <button 
           className="carousel-control next" 
-          onClick={scrollToNext}
+          onClick={() => scrollNext()}
           aria-label="Siguiente"
         >
           &#10095;

@@ -116,18 +116,27 @@
 .project-card {
     flex: 0 0 auto;
     width: 350px;
-    background-color: var(--gris-oscuro);
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1); 
     border-radius: 19px; 
     overflow: hidden;
     box-shadow: 0 9px 10px rgba(0, 0, 0, 0.15); 
-    transition: transform 0.3s ease;
-    will-change: transform; /* Mejora el rendimiento para animaciones */
-    contain: layout paint style; /* Mejora el rendimiento */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform; 
+    contain: layout paint style;
+    position: relative;
+    cursor: pointer; /* Mostrar cursor de puntero en toda la tarjeta */
 }
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto de pulsación al hacer clic */
+.project-card:active {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
 }
 
 .project-image {
@@ -162,6 +171,7 @@
 
 .project-info {
     padding: 30px; 
+    position: relative;
 }
 
 .project-info h3 {
@@ -175,30 +185,33 @@
     min-height: 80px; 
 }
 
-.project-info a {
-    color: #a1a1a1;
-    font-weight: 500;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 15px;
+/* Overlay para indicar que la tarjeta es clickeable */
+.card-overlay {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
     background-color: rgba(255, 255, 255, 0.1);
+    color: #a1a1a1;
+    padding: 8px 15px;
     border-radius: 20px;
+    font-weight: 500;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
-.project-info a:after {
+.card-overlay:after {
     content: "→";
     margin-left: 5px;
     transition: all 0.3s ease;
 }
 
-.project-info a:hover {
+.project-card:hover .card-overlay {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.project-info a:hover:after {
-    margin-left: 10px;
+.project-card:hover .card-overlay:after {
+    margin-left: 10px; 
 }
 
 /* Responsive */

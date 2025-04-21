@@ -1,7 +1,7 @@
 /* Sección Servicios */
 .services {
     padding: 100px 0 120px; 
-    background-color: #525755;
+    
     border-radius: 15px; 
     margin-bottom: 40px;
 }
@@ -26,7 +26,7 @@
 }
 
 .service-card:after {
-    content: "Ver detalles";
+
     position: absolute;
     bottom: 20px;
     right: 20px;

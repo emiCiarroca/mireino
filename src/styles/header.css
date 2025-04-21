@@ -9,7 +9,7 @@ header {
     left: 0;
     width: 100%;
     z-index: 1000; /* Encima de otros elementos */
-    background-color: rgba(82, 87, 85, 0.9); /* Fondo semi-transparente */
+    background-color: rgba(53, 88, 74, 0.9); /* Fondo semi-transparente */
     backdrop-filter: blur(5px); /* Desenfoque */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
 }

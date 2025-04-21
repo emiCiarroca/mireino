@@ -25,6 +25,7 @@ import './styles/adoption.css'
 function App() {
   const [message, setMessage] = useState({ text: '', type: '', visible: false });
   const [showAdoption, setShowAdoption] = useState(false);
+  const [currentHorse, setCurrentHorse] = useState('');
 
   const showMessage = (text, type = 'info') => {
     setMessage({ text, type, visible: true });
@@ -36,7 +37,8 @@ function App() {
   };
 
   // Función para mostrar la sección de adopción
-  const handleShowAdoption = () => {
+  const handleShowAdoption = (horseName = 'Benito') => {
+    setCurrentHorse(horseName);
     setShowAdoption(true);
     // Esperar un momento para que la sección se renderice antes de desplazarse
     setTimeout(() => {
@@ -50,6 +52,7 @@ function App() {
   // Función para cerrar la sección de adopción
   const handleCloseAdoption = () => {
     setShowAdoption(false);
+    setCurrentHorse('');
   };
 
   return (
@@ -59,7 +62,13 @@ function App() {
       <ProjectSection showMessage={showMessage} onShowAdoption={handleShowAdoption} />
       <AboutSection showMessage={showMessage} />
       <ServicesSection />
-      {showAdoption && <AdoptionSection showMessage={showMessage} onClose={handleCloseAdoption} />}
+      {showAdoption && (
+        <AdoptionSection 
+          showMessage={showMessage} 
+          onClose={handleCloseAdoption} 
+          horseName={currentHorse}
+        />
+      )}
       <ShopSection showMessage={showMessage} />
       <ContactSection showMessage={showMessage} />
       <Footer showMessage={showMessage} />
