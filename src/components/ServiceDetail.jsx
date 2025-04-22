@@ -25,13 +25,10 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
   // Si no está abierto o no hay servicio, no renderiza
   if (!isOpen || !service) return null;
 
-  // Datos de ejemplo para fotos del servicio
-  const serviceImages = [
-    `/src/assets/imagenes/services/${service.id}-1.webp`,
-    `/src/assets/imagenes/services/${service.id}-2.webp`,
-    `/src/assets/imagenes/services/${service.id}-3.webp`,
-    `/src/assets/imagenes/services/${service.id}-4.webp`
-  ];
+  // Obtener la imagen específica para cada servicio
+  const getServiceImage = () => {
+    return `/src/assets/imagenes/${service.id}.webp`;
+  };
 
   return (
     <div className="service-detail-overlay">
@@ -45,7 +42,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
           <div className="service-detail-gallery">
             <div className="service-main-image">
               <img 
-                src={`/src/assets/imagenes/services/${service.id}-main.webp`} 
+                src={getServiceImage()} 
                 alt={service.title} 
                 onError={(e) => {
                   e.target.onerror = null;
@@ -53,25 +50,11 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                 }}
               />
             </div>
-            <div className="service-thumbnails">
-              {serviceImages.map((img, index) => (
-                <div key={index} className="service-thumbnail">
-                  <img 
-                    src={img} 
-                    alt={`${service.title} imagen ${index + 1}`}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/src/assets/imagenes/veterinary.webp';
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
           </div>
           
           <div className="service-detail-info">
             <div className="service-detail-description">
-              <h3>Acerca de este servicio</h3>
+              <h3>Gracias a tu ayuda esto es posible</h3>
               <p className="service-icon-large">{service.icon}</p>
               <p>{service.description}</p>
               
@@ -155,19 +138,9 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
             </div>
             
             <div className="service-detail-footer">
-              <a href="#contact" className="contact-about-service" onClick={onClose}>
-                Contactar sobre este servicio
-              </a>
-              
               {service.id === 'adoption' && (
                 <a href="#adoption" className="adoption-process-btn" onClick={onClose}>
                   Ver proceso de adopción
-                </a>
-              )}
-              
-              {service.id !== 'adoption' && (
-                <a href="#volunteer" className="volunteer-service-btn" onClick={onClose}>
-                  Voluntariado en esta área
                 </a>
               )}
             </div>

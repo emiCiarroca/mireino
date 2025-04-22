@@ -77,7 +77,7 @@ function Header() {
               </>
             ) : (
               <>
-                <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Ellos</a></li>
+                <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
                 <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
                 <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
                 <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>

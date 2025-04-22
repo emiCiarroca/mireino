@@ -34,8 +34,8 @@ const Hero = ({ showMessage }) => {
             Nuestra ONG se dedica a rescatar caballos maltratados, brindándoles un espacio seguro
             donde pueden sanar tanto física como emocionalmente.
           </p>
-          <a href="#projects" className="btn" onClick={handleViewWorkClick}>
-            Conoce nuestro trabajo
+          <a href="#services" className="btn" onClick={handleViewWorkClick}>
+            Conoce los equinos activos
           </a>
         </div>
       </div>
