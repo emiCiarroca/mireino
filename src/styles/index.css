@@ -9,7 +9,6 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 2;
     color: #ffffff;
-    /*background-color: #525755;*/
     background-color: #334641;
     padding-top: 85px; 
 }
@@ -25,7 +24,7 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 0 10px;
+    padding: 0 20px;
 }
 
 /* Botón común */
@@ -47,18 +46,22 @@ body {
 
 /* Estilos comunes para encabezados de sección */
 .section-header {
-    margin-bottom: 60px;
+    margin-bottom: 0px;
+    text-align: center;
 }
 
 .section-header h2 {
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 .section-header p {
-    font-size: 18px;
+    font-size: 20px;
+    line-height: 1.1;
     color: #ffffff;
-    max-width: 600px;
+    text-align: center;
+    
+    
 }
 
 /* Responsive general */

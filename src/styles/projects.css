@@ -4,114 +4,6 @@
     margin-bottom: 30px;
 }
 
-/* Estilos del contenedor del carrusel */
-.carousel-container {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-/* Estilos del carrusel */
-.project-carousel {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
-    -ms-overflow-style: none; /* Ocultar scrollbar en IE y Edge */
-    gap: 50px;
-    padding: 10px 0;
-    width: 100%;
-    cursor: grab;
-    will-change: transform, scroll-position; /* Mejora el rendimiento */
-}
-
-/* Ocultar scrollbar en Chrome, Safari y Opera */
-.project-carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.project-carousel:active {
-    cursor: grabbing;
-}
-
-/* Controles del carrusel */
-.carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: #fff;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-
-.carousel-control:hover {
-    background-color: rgba(114, 114, 114, 0.5);
-}
-
-.carousel-control.prev {
-    left: -20px;
-}
-
-.carousel-control.next {
-    right: -20px;
-}
-
-/* Barra deslizante del carrusel */
-.carousel-slider-container {
-    width: 100%;
-    padding: 0 20px;
-    margin-top: 20px;
-}
-
-.carousel-slider {
-    width: 100%;
-    height: 6px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-    outline: none;
-}
-
-/* Estilo para el "pulgar" de la barra deslizante */
-.carousel-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #ffffff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.carousel-slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #ffffff;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
-}
-
-.carousel-slider::-webkit-slider-thumb:hover,
-.carousel-slider::-moz-range-thumb:hover {
-    transform: scale(1.2);
-}
-
 /* Estilo de las tarjetas de proyecto */
 .project-card {
     flex: 0 0 auto;
@@ -224,18 +116,6 @@
         width: 300px;
     }
     
-    .carousel-control {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .carousel-control.prev {
-        left: -10px;
-    }
-    
-    .carousel-control.next {
-        right: -10px;
-    }
 }
 
 @media (max-width: 480px) {

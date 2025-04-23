@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../styles/projects.css';
-import useDragScroll from '../hooks/useDragScroll';
+import useCarouselScale from '../hooks/useCarouselScale';
 
 // Importación de imágenes
 import Benito from "../assets/imagenes/Benito.webp";
@@ -16,30 +16,19 @@ import Torio from "../assets/imagenes/Torio.webp";
 import Zeus from "../assets/imagenes/Zeus.webp";
 
 const ProjectSection = ({ showMessage, onShowAdoption }) => {
-  const [sliderValue, setSliderValue] = useState(0);
-  const [maxSliderValue, setMaxSliderValue] = useState(100);
-  
-  // Usar el hook personalizado para manejar el arrastre
+  // Usar el hook personalizado para el carousel con efecto de escala
   const {
-    isDragging,
-    dragRef,
-    handleDragStart,
-    handleDragMove,
-    handleDragEnd,
-    isClick,
-    scrollNext,
-    scrollPrev
-  } = useDragScroll();
+    carouselRef,
+    registerCard,
+    activeIndex,
+    next,
+    prev,
+    goToCard
+  } = useCarouselScale();
 
-  const handleViewProject = (e, project) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Solo activar si es un clic y no un arrastre
-    if (isClick()) {
-      onShowAdoption(project.name);
-      showMessage(`Conoce más sobre ${project.name}`, 'info');
-    }
+  const handleViewProject = (project) => {
+    onShowAdoption(project.name);
+    showMessage(`Conoce más sobre ${project.name}`, 'info');
   };
 
   const projects = [
@@ -56,49 +45,6 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
     { name: "Zeus", title: "Potrillo de 3 meses", description: "Tan tranquilo como orgulloso, está aprendiendo a confiar tras ser rescatado de una situación de abandono.", image: Zeus }
   ];
 
-  // Calcular el valor máximo para el slider
-  useEffect(() => {
-    if (dragRef.current) {
-      const updateMaxValue = () => {
-        const carousel = dragRef.current;
-        const scrollWidth = carousel.scrollWidth;
-        const clientWidth = carousel.clientWidth;
-        
-        if (scrollWidth > clientWidth) {
-          setMaxSliderValue(scrollWidth - clientWidth);
-        } else {
-          setMaxSliderValue(100); // Valor predeterminado
-        }
-      };
-      
-      updateMaxValue();
-      // Actualizar cuando cambie el tamaño de la ventana
-      window.addEventListener('resize', updateMaxValue);
-      
-      return () => {
-        window.removeEventListener('resize', updateMaxValue);
-      };
-    }
-  }, []);
-
-  // Manejar el cambio del slider
-  const handleSliderChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    setSliderValue(value);
-    
-    if (dragRef.current) {
-      dragRef.current.scrollLeft = value;
-    }
-  };
-
-  // Actualizar el slider cuando se desplaza el carrusel
-  const handleCarouselScroll = () => {
-    if (dragRef.current) {
-      const currentScroll = dragRef.current.scrollLeft;
-      setSliderValue(currentScroll);
-    }
-  };
-
   return (
     <section id="projects" className="projects container">
       <div className="section-header">
@@ -106,74 +52,76 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
         <p>Conoce los equinos activos en el predio</p>
       </div>
       
-      <div className="carousel-container">
-        <button 
-          className="carousel-control prev" 
-          onClick={() => scrollPrev()}
-          aria-label="Anterior"
-        >
-          &#10094;
-        </button>
-        
+      <div className="carousel-scale-container">
         <div 
-          className="project-carousel" 
-          ref={dragRef}
-          onMouseDown={handleDragStart}
-          onMouseMove={handleDragMove}
-          onMouseUp={handleDragEnd}
-          onMouseLeave={handleDragEnd}
-          onScroll={handleCarouselScroll}
+          className="carousel-scale" 
+          ref={carouselRef}
         >
           {projects.map((project, index) => (
             <div 
-              className="project-card" 
+              className={`carousel-card ${activeIndex === index ? 'active' : ''}`} 
               key={index}
-              onClick={(e) => handleViewProject(e, project)}
+              ref={registerCard}
+              onClick={() => {
+                goToCard(index);
+                setTimeout(() => handleViewProject(project), 300);
+              }}
             >
-              <div className="project-image">
-                <img 
-                  src={project.image || `/api/placeholder/350/250`}
-                  alt={`Imagen de ${project.name}`}
-                  className="horse-image"
-                  loading="lazy" // Carga diferida para mejorar rendimiento
-                  onError={(e) => {
-                    e.target.onerror = null; 
-                    e.target.src = `/api/placeholder/350/250`;
-                  }}
-                />
-                <div className="project-name">{project.name}</div>
-              </div>
-              <div className="project-info">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="card-overlay">
-                  <span>Ver detalles</span>
+              <div className="carousel-card-inner">
+                <div className="carousel-card-image">
+                  <img 
+                    src={project.image || `/api/placeholder/300/250`}
+                    alt={`Imagen de ${project.name}`}
+                    className="carousel-card-img"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = `/api/placeholder/300/250`;
+                    }}
+                  />
+                  <div className="carousel-card-name">{project.name}</div>
+                </div>
+                <div className="carousel-card-info">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="carousel-card-overlay">
+                    <span>Ver detalles</span>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
         
-        <button 
-          className="carousel-control next" 
-          onClick={() => scrollNext()}
-          aria-label="Siguiente"
-        >
-          &#10095;
-        </button>
-      </div>
-      
-      {/* Barra de desplazamiento horizontal */}
-      <div className="carousel-slider-container">
-        <input 
-          type="range"
-          min="0"
-          max={maxSliderValue}
-          value={sliderValue}
-          onChange={handleSliderChange}
-          className="carousel-slider"
-          aria-label="Desplazamiento del carrusel"
-        />
+        <div className="carousel-controls">
+          <button 
+            className="carousel-control-btn" 
+            onClick={prev}
+            disabled={activeIndex === 0}
+            aria-label="Anterior"
+          >
+            &#10094;
+          </button>
+          <button 
+            className="carousel-control-btn" 
+            onClick={next}
+            disabled={activeIndex === projects.length - 1}
+            aria-label="Siguiente"
+          >
+            &#10095;
+          </button>
+        </div>
+        
+        <div className="carousel-indicators">
+          {projects.map((_, index) => (
+            <button
+              key={index} 
+              className={`carousel-indicator ${activeIndex === index ? 'active' : ''}`}
+              onClick={() => goToCard(index)}
+              aria-label={`Ir a tarjeta ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
