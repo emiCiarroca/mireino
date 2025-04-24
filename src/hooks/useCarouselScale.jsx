@@ -20,36 +20,36 @@ const useCarouselScale = () => {
   // Calcular el índice activo basado en la posición del scroll
   const calculateActiveIndex = useCallback(() => {
     if (!carouselRef.current || cardsRef.current.length === 0) return;
-    
+
     const carousel = carouselRef.current;
     const scrollPosition = carousel.scrollLeft;
     const containerWidth = carousel.offsetWidth;
     const centerPoint = scrollPosition + containerWidth / 2;
-    
+
     // Encontrar la tarjeta más cercana al centro
     let closestIndex = 0;
     let closestDistance = Infinity;
-    
+
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
-      
+
       const cardLeft = card.offsetLeft;
       const cardCenter = cardLeft + card.offsetWidth / 2;
       const distance = Math.abs(centerPoint - cardCenter);
-      
+
       if (distance < closestDistance) {
         closestDistance = distance;
         closestIndex = index;
       }
     });
-    
+
     return closestIndex;
   }, []);
 
   // Actualizar el índice activo cuando el carousel se desplaza
   const handleScroll = useCallback(() => {
     if (sliding) return;
-    
+
     const newIndex = calculateActiveIndex();
     if (newIndex !== undefined && newIndex !== activeIndex) {
       setActiveIndex(newIndex);
@@ -59,22 +59,22 @@ const useCarouselScale = () => {
   // Ir a una tarjeta específica
   const goToCard = useCallback((index) => {
     if (!carouselRef.current || !cardsRef.current[index]) return;
-    
+
     setSliding(true);
     const carousel = carouselRef.current;
     const card = cardsRef.current[index];
     const containerWidth = carousel.offsetWidth;
-    
+
     // Calcular la posición de desplazamiento para centrar la tarjeta
     const scrollPosition = card.offsetLeft - (containerWidth / 2) + (card.offsetWidth / 2);
-    
+
     carousel.scrollTo({
       left: scrollPosition,
       behavior: 'smooth'
     });
-    
+
     setActiveIndex(index);
-    
+
     // Restablecer el estado sliding después de la animación
     setTimeout(() => {
       setSliding(false);
@@ -101,7 +101,7 @@ const useCarouselScale = () => {
         setActiveIndex(newIndex);
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -112,26 +112,15 @@ const useCarouselScale = () => {
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
-    
+
     carousel.addEventListener('scroll', handleScroll);
     return () => {
       carousel.removeEventListener('scroll', handleScroll);
     };
   }, [handleScroll]);
 
-  // Configurar la inicialización del carousel
-  useEffect(() => {
-    // Limpiar la referencia al principio
-    cardsRef.current = [];
-    
-    // Se asegura de que el carousel empiece con un índice válido
-    if (carouselRef.current) {
-      setTimeout(() => {
-        // Centrar la primera tarjeta al inicio
-        goToCard(0);
-      }, 100);
-    }
-  }, [goToCard]);
+  // 🚫 Eliminamos la inicialización automática porque puede ocurrir antes del render completo
+  // En su lugar, la inicialización se maneja dentro de ProjectSection.jsx
 
   return {
     carouselRef,

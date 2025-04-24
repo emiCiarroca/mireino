@@ -46,7 +46,7 @@
   
   .carousel-card-inner {
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 19px;
+    border-radius: px;
     overflow: hidden;
     box-shadow: 0 9px 10px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
@@ -107,6 +107,7 @@
     flex-grow: 1;
   }
   
+  /* Btn ver detalles en objetos services
   .carousel-card-overlay {
     background-color: rgba(255, 255, 255, 0.1);
     color: #a1a1a1;
@@ -131,7 +132,7 @@
   
   .carousel-card:hover .carousel-card-overlay:after {
     margin-left: 10px;
-  }
+  }*/
   
   .carousel-controls {
     display: flex;

@@ -16,7 +16,6 @@ import Torio from "../assets/imagenes/Torio.webp";
 import Zeus from "../assets/imagenes/Zeus.webp";
 
 const ProjectSection = ({ showMessage, onShowAdoption }) => {
-  // Usar el hook personalizado para el carousel con efecto de escala
   const {
     carouselRef,
     registerCard,
@@ -26,11 +25,9 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
     goToCard
   } = useCarouselScale();
 
-  const handleViewProject = (project) => {
-    onShowAdoption(project.name);
-    showMessage(`Conoce más sobre ${project.name}`, 'info');
-  };
+  const [initialized, setInitialized] = useState(false);
 
+  // Lista de proyectos (caballos disponibles)
   const projects = [
     { name: "Benito", title: "Equino Fijo en el predio", description: "Sociable, adora las galletas, totalmente tranquilo", image: Benito },
     { name: "Emilce", title: "Potranca de 2 años", description: "Juguetona y curiosa, aprende rápido y se adapta bien a nuevos entornos.", image: Emilce },
@@ -45,6 +42,21 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
     { name: "Zeus", title: "Potrillo de 3 meses", description: "Tan tranquilo como orgulloso, está aprendiendo a confiar tras ser rescatado de una situación de abandono.", image: Zeus }
   ];
 
+  //  Inicializar el carousel solo después de que todos los elementos estén montados
+  useEffect(() => {
+    if (!initialized && carouselRef.current?.children.length >= projects.length) {
+      setTimeout(() => {
+        goToCard(0);
+      }, 100);
+      setInitialized(true);
+    }
+  }, [initialized, projects.length, carouselRef, goToCard]);
+
+  const handleViewProject = (project) => {
+    onShowAdoption(project.name);
+    showMessage(`Conoce más sobre ${project.name}`, 'info');
+  };
+
   return (
     <section id="projects" className="projects container">
       <div className="section-header">
@@ -53,13 +65,10 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
       </div>
       
       <div className="carousel-scale-container">
-        <div 
-          className="carousel-scale" 
-          ref={carouselRef}
-        >
+        <div className="carousel-scale" ref={carouselRef}>
           {projects.map((project, index) => (
-            <div 
-              className={`carousel-card ${activeIndex === index ? 'active' : ''}`} 
+            <div
+              className={`carousel-card ${activeIndex === index ? 'active' : ''}`}
               key={index}
               ref={registerCard}
               onClick={() => {
@@ -69,13 +78,13 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
             >
               <div className="carousel-card-inner">
                 <div className="carousel-card-image">
-                  <img 
+                  <img
                     src={project.image || `/api/placeholder/300/250`}
                     alt={`Imagen de ${project.name}`}
                     className="carousel-card-img"
                     loading="lazy"
                     onError={(e) => {
-                      e.target.onerror = null; 
+                      e.target.onerror = null;
                       e.target.src = `/api/placeholder/300/250`;
                     }}
                   />
@@ -84,26 +93,27 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
                 <div className="carousel-card-info">
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <div className="carousel-card-overlay">
-                    <span>Ver detalles</span>
+
+                   <div className="carousel-card-overlay">
+                    
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        
+
         <div className="carousel-controls">
-          <button 
-            className="carousel-control-btn" 
+          <button
+            className="carousel-control-btn"
             onClick={prev}
             disabled={activeIndex === 0}
             aria-label="Anterior"
           >
             &#10094;
           </button>
-          <button 
-            className="carousel-control-btn" 
+          <button
+            className="carousel-control-btn"
             onClick={next}
             disabled={activeIndex === projects.length - 1}
             aria-label="Siguiente"
@@ -111,11 +121,11 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
             &#10095;
           </button>
         </div>
-        
+
         <div className="carousel-indicators">
           {projects.map((_, index) => (
             <button
-              key={index} 
+              key={index}
               className={`carousel-indicator ${activeIndex === index ? 'active' : ''}`}
               onClick={() => goToCard(index)}
               aria-label={`Ir a tarjeta ${index + 1}`}
