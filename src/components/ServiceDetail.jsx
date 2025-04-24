@@ -1,10 +1,25 @@
 import { useEffect, useRef } from 'react';
 import '../styles/service-detail.css';
 
+import veterinaryImg from '../assets/imagenes/veterinary.webp';
+import shelterImg from '../assets/imagenes/shelter.webp';
+import nutritionImg from '../assets/imagenes/nutrition.webp';
+import adoptionImg from '../assets/imagenes/adoption.webp';
+import therapyImg from '../assets/imagenes/therapy.webp';
+import educationImg from '../assets/imagenes/education.webp';
+
+const serviceImages = {
+  veterinary: veterinaryImg,
+  shelter: shelterImg,
+  nutrition: nutritionImg,
+  adoption: adoptionImg,
+  therapy: therapyImg,
+  education: educationImg
+};
+
 const ServiceDetail = ({ isOpen, onClose, service }) => {
   const detailRef = useRef(null);
-  
-  // Cerrar el detalle al hacer clic fuera de él
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (detailRef.current && !detailRef.current.contains(event.target)) {
@@ -12,7 +27,6 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
       }
     };
 
-    // Añadir event listener solo cuando el detalle está abierto
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -22,12 +36,10 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
     };
   }, [isOpen, onClose]);
 
-  // Si no está abierto o no hay servicio, no renderiza
   if (!isOpen || !service) return null;
 
-  // Obtener la imagen específica para cada servicio
   const getServiceImage = () => {
-    return `/src/assets/imagenes/${service.id}.webp`;
+    return serviceImages[service.id] || veterinaryImg;
   };
 
   return (
@@ -44,20 +56,16 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
               <img 
                 src={getServiceImage()} 
                 alt={service.title} 
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/src/assets/imagenes/veterinary.webp';
-                }}
               />
             </div>
           </div>
-          
+
           <div className="service-detail-info">
             <div className="service-detail-description">
               <h3>Gracias a tu ayuda esto es posible</h3>
               <p className="service-icon-large">{service.icon}</p>
               <p>{service.description}</p>
-              
+
               {service.id === 'veterinary' && (
                 <>
                   <p>Nuestro equipo veterinario especializado proporciona atención médica integral para todos los caballos rescatados, incluyendo:</p>
@@ -70,7 +78,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
-              
+
               {service.id === 'shelter' && (
                 <>
                   <p>Nuestro refugio ofrece un entorno seguro y tranquilo donde los caballos pueden recuperarse y prosperar:</p>
@@ -83,7 +91,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
-              
+
               {service.id === 'nutrition' && (
                 <>
                   <p>Desarrollamos planes de alimentación personalizados para cada caballo según sus necesidades específicas:</p>
@@ -96,7 +104,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
-              
+
               {service.id === 'adoption' && (
                 <>
                   <p>Nuestro programa de adopción responsable conecta caballos rehabilitados con hogares amorosos:</p>
@@ -109,7 +117,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
-              
+
               {service.id === 'therapy' && (
                 <>
                   <p>Nuestros programas de rehabilitación conductual ayudan a caballos traumatizados a recuperar su confianza:</p>
@@ -122,7 +130,7 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
-              
+
               {service.id === 'education' && (
                 <>
                   <p>Nuestros programas educativos promueven la conciencia sobre el bienestar equino:</p>
@@ -136,14 +144,8 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                 </>
               )}
             </div>
+
             
-            <div className="service-detail-footer">
-              {service.id === 'adoption' && (
-                <a href="#adoption" className="adoption-process-btn" onClick={onClose}>
-                  Ver proceso de adopción
-                </a>
-              )}
-            </div>
           </div>
         </div>
       </div>
