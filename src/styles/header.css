@@ -72,18 +72,12 @@ nav .main-nav li a:hover {
     font-size: 18px;
 }
 
-.vertical .social-icon {
-    font-size: 18px; /* Mismo tamaño que los íconos de navegación */
-    margin: 0;
-}
-
-/* Ajustes para la navegación social */
 .social-nav {
     display: flex;
     align-items: center;
 }
 
-.horizontal .social-icons {
+.social-icons {
     display: flex;
     gap: 20px;
 }
@@ -93,10 +87,70 @@ nav .main-nav li a:hover {
     opacity: 0.7;
 }
 
+/* Barra de navegación móvil inferior */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(53, 88, 74, 0.95);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.mobile-nav-icons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.mobile-nav-icons li {
+    margin: 0;
+    text-align: center;
+}
+
+.mobile-nav-icons li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.mobile-nav-icons li a:hover {
+    opacity: 0.7;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    header {
-        padding: 5px 0; /* Reducido para móviles */
+    header.mobile-scrolled {
+        height: 60px;
+        padding: 5px 0;
+        /* Hacemos que el header sea más simple cuando se muestra la barra inferior */
+    }
+    
+    /* Ocultamos la navegación desktop en el header cuando aparece la navegación móvil */
+    header.mobile-scrolled .desktop-nav {
+        display: none;
+    }
+    
+    /* Mostramos la barra de navegación inferior en móviles */
+    .mobile-bottom-nav {
+        display: block;
+    }
+    
+    /* Ajustamos el padding del body para tener en cuenta la barra de navegación inferior */
+    body {
+        padding-bottom: 60px; /* Altura aproximada de la barra inferior */
     }
     
     header .container {
@@ -106,7 +160,7 @@ nav .main-nav li a:hover {
     
     nav {
         margin-top: 15px;
-        width: 200%;
+        width: 100%;
         justify-content: center;
     }
     
@@ -125,14 +179,14 @@ nav .main-nav li a:hover {
         font-size: 18px; 
     }
     
-    .horizontal .social-icons {
+    .social-icons {
         gap: 15px;
     }
 }
 
 @media (max-width: 480px) {
     nav .main-nav li {
-        margin: 0 8px; 
+        margin: 0 5.8px; 
         font-size: 12px; 
     }
     
@@ -144,7 +198,12 @@ nav .main-nav li a:hover {
         font-size: 16px;
     }
     
-    .horizontal .social-icons {
+    .social-icons {
         gap: 12px;
+    }
+    
+    /* Ajustamos el tamaño de los íconos en pantallas muy pequeñas */
+    .mobile-nav-icons li a {
+        font-size: 18px;
     }
 }
