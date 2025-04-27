@@ -1,5 +1,5 @@
 import '../styles/hero.css'
-import HeroImage from "../assets/imagenes/Hero.webp"; // imagen de fondo
+import HeroImage from "../assets/imagenes/Hero.webp";
 
 const Hero = ({ showMessage }) => {
   const handleViewWorkClick = (e) => {
@@ -13,19 +13,8 @@ const Hero = ({ showMessage }) => {
 
   return (
     <section className="hero">
-      {/* Banner de fondo con la imagen importada */}
-      <div
-        className="hero-banner"
-        style={{
-          backgroundImage: `url(${HeroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-      >
-        
-        <div className="hero-overlay"></div>
-      </div>
+      {/* Banner de fondo */}
+      <div className="hero-banner" style={{ backgroundImage: `url(${HeroImage})` }}></div>
 
       <div className="container">
         <div className="hero-content">

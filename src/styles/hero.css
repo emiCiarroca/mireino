@@ -17,15 +17,12 @@
   width: 100%;
   height: 100%;
   background-color: var(--verde-medio);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
   z-index: -1;
   overflow: hidden;
-}
-
-.hero-banner-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.4; 
 }
 
 /* Contenido del hero con fondo semitransparente */
@@ -56,18 +53,18 @@
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
-      padding: 0px 0 100px;
+    padding: 0px 0 100px;
   }
   
   .hero-content {
-      padding: 30px;
+    padding: 30px;
   }
   
   .hero h1 {
-      font-size: 30px;
+    font-size: 30px;
   }
   
   .hero p {
-      font-size: 15px;
+    font-size: 15px;
   }
 }

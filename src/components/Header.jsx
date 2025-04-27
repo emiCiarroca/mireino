@@ -16,15 +16,11 @@ function Header() {
       setScrolled(window.scrollY > 50);
     };
 
-    // Detectar la sección actual al cargar y cuando cambia la URL
+    // Detectar la sección actual y manejar la navegación
     const updateCurrentPath = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
-    };
-
-    // Evento de navegación para el botón atrás del móvil
-    const handlePopState = () => {
-      updateCurrentPath();
+      
       // Si no hay hash o es solo #, ir al inicio
       if (!window.location.hash || window.location.hash === '#') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,7 +31,6 @@ function Header() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     window.addEventListener("scroll", onScroll);
-    window.addEventListener("popstate", handlePopState);
     window.addEventListener("hashchange", updateCurrentPath);
     
     // Inicializar el path actual
@@ -44,7 +39,6 @@ function Header() {
     return () => {
       window.removeEventListener("resize", checkMobile);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("popstate", handlePopState);
       window.removeEventListener("hashchange", updateCurrentPath);
     };
   }, []);
@@ -59,8 +53,8 @@ function Header() {
     }
   };
 
-  // Determina la clase para el header y la barra de navegación móvil
-  const headerClass = isMobile && scrolled ? "mobile-scrolled" : "horizontal";
+  // Determina la clase para el header
+  const headerClass = isMobile && scrolled ? "mobile-scrolled" : "";
   const showMobileNav = isMobile && scrolled;
 
   return (

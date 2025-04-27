@@ -15,7 +15,7 @@ import './styles/index.css'
 import './styles/header.css'
 import './styles/hero.css'
 import './styles/projects.css'
-import './styles/carousel-scale.css' // Nuevo estilo para el carousel
+import './styles/carousel-scale.css'
 import './styles/services.css'
 import './styles/shop.css'
 import './styles/cart.css'
