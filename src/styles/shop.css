@@ -180,7 +180,7 @@
     }
     
     .product-card {
-        transform: none; /* Elimina la animación en móvil para mejor rendimiento */
+        transform: none; 
     }
     
     .product-image {

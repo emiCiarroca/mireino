@@ -13,7 +13,7 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
     product?.image
   ];
   
-  // Stock simulado para ejemplo
+  // Stock simulado
   const stockAvailable = Math.floor(Math.random() * 20) + 1;
   
   // Cerrar el detalle al hacer clic fuera de él
@@ -24,7 +24,7 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
       }
     };
 
-    // Añadir event listener solo cuando el detalle está abierto
+    // Event listener solo cuando el detalle está abierto
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }

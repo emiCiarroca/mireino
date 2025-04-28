@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../styles/shop.css';
-import Cart from './Cart'; // Importamos el componente Cart
-import ProductDetail from './ProductDetail'; // Importamos el nuevo componente
+import Cart from './Cart'; 
+import ProductDetail from './ProductDetail'; 
 
 // Importar imágenes desde la carpeta /src/assets/imagenes
 import alfajores from '/src/assets/imagenes/alfajores.webp';

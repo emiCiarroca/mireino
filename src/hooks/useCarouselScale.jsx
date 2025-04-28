@@ -119,9 +119,6 @@ const useCarouselScale = () => {
     };
   }, [handleScroll]);
 
-  // 🚫 Eliminamos la inicialización automática porque puede ocurrir antes del render completo
-  // En su lugar, la inicialización se maneja dentro de ProjectSection.jsx
-
   return {
     carouselRef,
     registerCard,
