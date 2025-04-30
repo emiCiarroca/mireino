@@ -52,15 +52,22 @@
 /* Responsive */
 @media (max-width: 768px) {
     .about {
-        padding: 100px 0;
+        padding: 70px 0;
     }
     
     .about-content {
         grid-template-columns: 1fr;
-        gap: 50px;
+        gap: 1px;
     }
     
     .about-text h2 {
         font-size: 40px;
+    }
+    .about-text p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .about-image {
+        height: 300px;
     }
 }

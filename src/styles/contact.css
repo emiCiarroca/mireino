@@ -64,15 +64,33 @@
 /* Responsive */
 @media (max-width: 768px) {
     .contact {
-        padding: 80px 0 100px;
+        padding: 60px 0 60px;
     }
     
     .contact-content {
         grid-template-columns: 1fr;
-        gap: 50px;
+        gap: 10px;
     }
     
     .contact-info {
-        order: -1; 
+        order: 1px; 
+        padding: 20px;
     }
+    .contact-info h3 {
+        font-size: 24px; 
+        margin-bottom: 25px; 
+    }
+    .contact-info p {
+        margin-bottom: 20px; 
+        font-size: 14px;
+        line-height: 13px;}
+    .contact-form {
+        order: 1;     
+    }
+    .contact-form input,
+    .contact-form textarea {
+    margin-bottom: 6px;
+    padding: 7px;       
+    font-size: 14px;
+}
 }

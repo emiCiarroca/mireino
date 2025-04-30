@@ -1,14 +1,13 @@
 /* Sección Servicios */
 .services {
     padding: 100px 0 120px; 
-    
     border-radius: 15px; 
     margin-bottom: 40px;
 }
 
 .section-header p {
     margin-bottom: 20px;
-  }
+}
 
 .services-grid {
     display: grid;
@@ -30,7 +29,6 @@
 }
 
 .service-card:after {
-
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -72,25 +70,106 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .services {
         padding: 80px 0 100px;
     }
 
     .section-header p {
         margin-bottom: 10px;
-      }
+    }
     
     .services-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
     
     .service-card {
-        padding: 30px;
+        padding: 25px;
+    }
+    
+    .service-card h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .service-icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+    
+    .service-card p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .services {
+        padding: 70px 0 90px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .service-card {
+        padding: 20px;
+    }
+    
+    .service-icon {
+        font-size: 35px;
+        margin-bottom: 15px;
+    }
+    
+    .service-card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    
+    .service-card p {
+        font-size: 13px;
+        line-height: 1.4;
+        /* Limitar la altura del texto para que no ocupe tanto espacio */
+        max-height: 5.6em;
+        overflow: hidden;
     }
     
     .service-card:after {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .services {
+        padding: 60px 0 80px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .service-card {
+        padding: 15px;
+    }
+    
+    .service-icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    
+    .service-card h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    
+    .service-card p {
+        font-size: 12px;
+        line-height: 1.3;
+        /* Reducir aún más la altura para móviles pequeños */
+        max-height: 3.9em;
     }
 }

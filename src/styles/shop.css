@@ -164,15 +164,17 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .section-header {
+        margin-top: 10px;
+    }
+
+    .shop {
+        padding: 10px 0;
+    }
     .shop-controls {
         flex-direction: column;
         align-items: flex-start;
     }
-    
-    .shop-categories {
-        margin-bottom: 20px;
-    }
-    
     
     .shop-grid {
         grid-template-columns: repeat(2, 1fr);

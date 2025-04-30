@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-padding-top: 80px;
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 2;
@@ -75,10 +80,15 @@ body {
     .container {
         padding: 0 15px; 
     }
+    .projects {
+        padding-top: -100px;
+      }
     
     .section-header {
-        margin-bottom: 40px; 
-    }
+        margin-top: 20px;
+        position: relative;
+        z-index: 1;
+      }
     
     .section-header h2 {
         font-size: 28px; 
