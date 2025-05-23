@@ -53,8 +53,8 @@
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
-    padding: 60px 0 50px; /* Reducir el padding inferior */
-    margin-bottom: 60px; /* Aumentar el margen inferior para separarlo de la siguiente sección */
+    padding: 60px 0 50px; 
+    margin-bottom: 60px; 
     min-height: 70vh;
   }
   
@@ -72,8 +72,8 @@
 
   @media (max-width: 480px) {
     .hero {
-      padding: 50px 0 40px; /* Reducir aún más el padding para pantallas pequeñas */
-      margin-bottom: 70px; /* Aumentar más el margen inferior */
+      padding: 50px 0 40px; 
+      margin-bottom: 70px; 
     }
   }
   

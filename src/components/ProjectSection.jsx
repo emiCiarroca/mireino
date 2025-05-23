@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../styles/projects.css';
-import useCarouselScale from '../hooks/useCarouselScale';
+import { useCarouselScale } from '../hooks/useCarouselScale';
 import { horses } from '../data/horses'; 
 
 const ProjectSection = ({ showMessage, onShowAdoption }) => {
@@ -15,7 +15,6 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
 
   const [initialized, setInitialized] = useState(false);
 
-  //  Inicializar el carousel solo después de que todos los elementos estén montados
   useEffect(() => {
     if (!initialized && carouselRef.current?.children.length >= horses.length) {
       setTimeout(() => {
@@ -66,10 +65,6 @@ const ProjectSection = ({ showMessage, onShowAdoption }) => {
                 <div className="carousel-card-info">
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-
-                   <div className="carousel-card-overlay">
-                    
-                  </div>
                 </div>
               </div>
             </div>

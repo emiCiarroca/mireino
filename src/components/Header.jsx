@@ -7,7 +7,6 @@ function Header() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Detectar si es dispositivo móvil
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -16,24 +15,20 @@ function Header() {
       setScrolled(window.scrollY > 50);
     };
 
-    // Detectar la sección actual y manejar la navegación
     const updateCurrentPath = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
       
-      // Si no hay hash o es solo #, ir al inicio
       if (!window.location.hash || window.location.hash === '#') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
-    // Inicializar y configurar listeners
     checkMobile();
     window.addEventListener("resize", checkMobile);
     window.addEventListener("scroll", onScroll);
     window.addEventListener("hashchange", updateCurrentPath);
     
-    // Inicializar el path actual
     updateCurrentPath();
 
     return () => {
@@ -43,22 +38,17 @@ function Header() {
     };
   }, []);
 
-  // Manejador para los enlaces del menú que actualiza la URL y realiza el desplazamiento suave
   const handleNavClick = (e, hash) => {
     e.preventDefault();
     
-    // Solo actualizar si es diferente a la sección actual
     if (hash !== currentPath) {
-      // Actualizar el historial del navegador
       window.history.pushState(null, '', hash);
       
-      // Obtener el elemento objetivo
       const targetElement = hash === '#' 
         ? document.body 
         : document.querySelector(hash);
       
       if (targetElement) {
-        // Desplazamiento suave hacia el elemento
         targetElement.scrollIntoView({ 
           behavior: 'smooth', 
           block: 'start' 
@@ -69,11 +59,9 @@ function Header() {
     }
   };
 
-  // Determina la clase para el header
   const headerClass = isMobile && scrolled ? "mobile-scrolled" : "";
   const showMobileNav = isMobile;
 
-  // Configuración de los elementos de navegación móvil
   const navItems = [
     { path: '#projects', icon: 'fas fa-horse', text: 'Equinos' },
     { path: '#about', icon: 'fas fa-users', text: 'Nosotros' },
@@ -111,7 +99,6 @@ function Header() {
         </div>
       </header>
       
-      {/* Barra de navegación móvil fija en la parte inferior */}
       {showMobileNav && (
         <nav className="mobile-bottom-nav">
           <ul className="mobile-nav-icons">

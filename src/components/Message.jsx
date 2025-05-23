@@ -4,7 +4,6 @@ const Message = ({ text, type }) => {
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
-    // Animación de entrada
     setTimeout(() => setOpacity(1), 10);
     
     return () => setOpacity(0);

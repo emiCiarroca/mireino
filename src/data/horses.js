@@ -1,4 +1,3 @@
-// Importación de imágenes
 import Benito from "../assets/imagenes/Benito.webp";
 import Emilce from "../assets/imagenes/Emilce.webp";
 import Eros from "../assets/imagenes/Eros.webp";
@@ -11,7 +10,6 @@ import Salome from "../assets/imagenes/Salome.webp";
 import Torio from "../assets/imagenes/Torio.webp";
 import Zeus from "../assets/imagenes/Zeus.webp";
 
-// Lista de proyectos (caballos disponibles)
 export const horses = [
   { name: "Benito", title: "Equino Fijo en el predio", description: "Sociable, adora las galletas, totalmente tranquilo", image: Benito },
   { name: "Emilce", title: "Potranca de 2 años", description: "Juguetona y curiosa, aprende rápido y se adapta bien a nuevos entornos.", image: Emilce },

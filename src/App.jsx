@@ -10,7 +10,6 @@ import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import Message from './components/Message'
 
-// Importar todos los estilos
 import './styles/index.css'
 import './styles/header.css'
 import './styles/hero.css'
@@ -31,17 +30,14 @@ function App() {
   const showMessage = (text, type = 'info') => {
     setMessage({ text, type, visible: true });
     
-    // Ocultar el mensaje después de 3 segundos
     setTimeout(() => {
       setMessage(prev => ({ ...prev, visible: false }));
     }, 3000);
   };
 
-  // Función para mostrar la sección de adopción
   const handleShowAdoption = (horseName = 'Benito') => {
     setCurrentHorse(horseName);
     setShowAdoption(true);
-    // Esperar un momento para que la sección se renderice antes de desplazarse
     setTimeout(() => {
       const adoptionSection = document.getElementById('adoption');
       if (adoptionSection) {
@@ -50,7 +46,6 @@ function App() {
     }, 100);
   };
 
-  // Función para cerrar la sección de adopción
   const handleCloseAdoption = () => {
     setShowAdoption(false);
     setCurrentHorse('');

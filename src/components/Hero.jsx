@@ -13,7 +13,6 @@ const Hero = ({ showMessage }) => {
 
   return (
     <section className="hero">
-      {/* Banner de fondo */}
       <div className="hero-banner" style={{ backgroundImage: `url(${HeroImage})` }}></div>
 
       <div className="container">

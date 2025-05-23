@@ -131,7 +131,6 @@
     .service-card p {
         font-size: 13px;
         line-height: 1.4;
-        /* Limitar la altura del texto para que no ocupe tanto espacio */
         max-height: 5.6em;
         overflow: hidden;
     }
@@ -169,7 +168,6 @@
     .service-card p {
         font-size: 12px;
         line-height: 1.3;
-        /* Reducir aún más la altura para móviles pequeños */
         max-height: 3.9em;
     }
 }

@@ -1,55 +1,163 @@
-import { useState } from 'react';
+import { useState, useCallback, memo, useEffect } from 'react';
 import '../styles/shop.css';
-import Cart from './Cart'; 
-import ProductDetail from './ProductDetail'; 
-import { categories, products } from '../data/products';
+import Cart from './Cart';
+import ProductDetail from './ProductDetail';
+import { categories } from '../data/categories';
+import { useCart } from '../hooks/useCart';
+
+const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
+  const handleAddToCartClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onAddToCart(product);
+  };
+
+  return (
+    <div className="product-card" onClick={() => onViewDetail(product)}>
+      <div className="product-image">
+        <img src={product.image} alt={product.name} loading="lazy" />
+      </div>
+      <div className="product-info">
+        <h3>{product.name}</h3>
+        <p className="product-description">{product.description}</p>
+        <div className="product-bottom">
+          <span className="product-price">${product.price.toFixed(2)}</span>
+          <button 
+            className="add-to-cart-btn"
+            onClick={handleAddToCartClick}
+            type="button"
+          >
+            Añadir
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 const ShopSection = ({ showMessage }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   
+  const {
+    cart,
+    cartCount,
+    cartTotal,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    updateQuantity
+  } = useCart();
+
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch('/data/products.json?t=' + Date.now());
+        
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!Array.isArray(data)) {
+          throw new Error('Formato de datos inválido: se esperaba un array');
+        }
+        
+        setProducts(data);
+      } catch (err) {
+        console.error('Error al cargar productos:', err);
+        setError(err.message);
+        showMessage(`Error al cargar productos: ${err.message}`, 'error');
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [showMessage]);
+
   const filteredProducts = selectedCategory === 'all' 
     ? products 
     : products.filter(product => product.category === selectedCategory);
   
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-    showMessage(`${product.name} añadido al carrito`, 'success');
-  };
+  const handleAddToCart = useCallback((product) => {
+    const message = addToCart(product);
+    showMessage(message, 'success');
+  }, [addToCart, showMessage]);
   
-  const viewCart = () => {
-    setIsCartOpen(true);
-  };
+  const handleRemoveFromCart = useCallback((index) => {
+    removeFromCart(index);
+    showMessage('Producto removido del carrito', 'info');
+  }, [removeFromCart, showMessage]);
   
-  const closeCart = () => {
-    setIsCartOpen(false);
-  };
-  
-  const removeFromCart = (index) => {
-    const newCart = [...cart];
-    const removedItem = newCart[index];
-    newCart.splice(index, 1);
-    setCart(newCart);
-    showMessage(`${removedItem.name} eliminado del carrito`, 'info');
-  };
-  
-  const clearCart = () => {
-    setCart([]);
+  const handleClearCart = useCallback(() => {
+    clearCart();
     showMessage('Carrito vaciado', 'info');
-  };
+  }, [clearCart, showMessage]);
   
-  const openProductDetail = (product) => {
+  const handleUpdateQuantity = useCallback((index, newQuantity) => {
+    if (newQuantity < 1) return;
+    updateQuantity(index, newQuantity);
+  }, [updateQuantity]);
+
+  const openProductDetail = useCallback((product) => {
     setSelectedProduct(product);
     setIsProductDetailOpen(true);
-  };
+  }, []);
   
-  const closeProductDetail = () => {
+  const closeProductDetail = useCallback(() => {
     setIsProductDetailOpen(false);
-  };
-  
+  }, []);
+
+  const viewCart = useCallback(() => {
+    setIsCartOpen(true);
+  }, []);
+
+  const closeCart = useCallback(() => {
+    setIsCartOpen(false);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section id="shop" className="shop">
+        <div className="container">
+          <div className="loading-message">
+            <p>Cargando productos...</p>
+            <div className="loading-spinner"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="shop" className="shop">
+        <div className="container">
+          <div className="error-message">
+            <p>{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="btn retry-btn"
+            >
+              Reintentar
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="shop" className="shop">
       <div className="container">
@@ -68,69 +176,58 @@ const ShopSection = ({ showMessage }) => {
                 key={category.id}
                 className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(category.id)}
+                type="button"
               >
                 {category.name}
               </button>
             ))}
           </div>
           
-          <button className="cart-btn" onClick={viewCart}>
-            Ver Carrito ({cart.length})
+          <button 
+            className="cart-btn" 
+            onClick={viewCart}
+            type="button"
+          >
+            Ver Carrito ({cartCount})
           </button>
         </div>
         
         <div className="shop-grid">
-          {filteredProducts.map(product => (
-            <div key={product.id} className="product-card" onClick={() => openProductDetail(product)}>
-              <div className="product-image">
-                <img src={product.image} alt={product.name} />
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <div key={product.id} className="product-wrapper">
+                <ProductCard
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                  onViewDetail={openProductDetail}
+                />
               </div>
-              <div className="product-info">
-                <h3>{product.name}</h3>
-                <p className="product-description">{product.description}</p>
-                <div className="product-bottom">
-                  <span className="product-price">${product.price.toFixed(2)}</span>
-                  <button 
-                    className="add-to-cart-btn"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Evitar que se abra el detalle al hacer clic en el botón
-                      addToCart(product);
-                    }}
-                  >
-                    Añadir
-                  </button>
-                </div>
-              </div>
+            ))
+          ) : (
+            <div className="no-products-message">
+              {products.length === 0 
+                ? 'No se encontraron productos disponibles' 
+                : 'No hay productos en esta categoría'}
             </div>
-          ))}
-        </div>
-        
-        <div className="shop-cta">
-          <p>
-            El 100% de nuestras ganancias se destina al cuidado de caballos rescatados. 
-            Tu compra marca la diferencia.
-          </p>
-          <a href="#contact" className="btn">
-            ¿Preguntas sobre productos? Contáctanos
-          </a>
+          )}
         </div>
       </div>
       
-      {/* Componente de Carrito */}
       <Cart 
         isOpen={isCartOpen} 
-        onClose={closeCart} 
+        onClose={closeCart}
         cartItems={cart} 
-        removeItem={removeFromCart}
-        clearCart={clearCart}
+        removeItem={handleRemoveFromCart}
+        clearCart={handleClearCart}
+        updateQuantity={handleUpdateQuantity}
+        total={cartTotal}
       />
 
-      {/* Componente de Detalle del Producto */}
       <ProductDetail
         isOpen={isProductDetailOpen}
         onClose={closeProductDetail}
         product={selectedProduct}
-        addToCart={addToCart}
+        addToCart={handleAddToCart}
       />
     </section>
   );

@@ -4,7 +4,6 @@ import '../styles/product-detail.css';
 const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
   const detailRef = useRef(null);
   
-  // Datos de ejemplo para mostrar múltiples imágenes
   const productImages = [
     product?.image,
     product?.image, 
@@ -13,10 +12,6 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
     product?.image
   ];
   
-  // Stock simulado
-  const stockAvailable = Math.floor(Math.random() * 20) + 1;
-  
-  // Cerrar el detalle al hacer clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (detailRef.current && !detailRef.current.contains(event.target)) {
@@ -24,7 +19,6 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
       }
     };
 
-    // Event listener solo cuando el detalle está abierto
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -34,7 +28,6 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
     };
   }, [isOpen, onClose]);
 
-  // Si no está abierto o no hay producto, no renderiza
   if (!isOpen || !product) return null;
 
   return (
@@ -42,7 +35,13 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
       <div className="product-detail-container" ref={detailRef}>
         <div className="product-detail-header">
           <h2>{product.name}</h2>
-          <button className="close-detail-btn" onClick={onClose}>×</button>
+          <button 
+            className="close-detail-btn" 
+            onClick={onClose}
+            type="button"
+          >
+            ×
+          </button>
         </div>
 
         <div className="product-detail-content">
@@ -67,10 +66,6 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
                 Este producto forma parte de nuestra colección solidaria. Cada compra contribuye 
                 directamente a los programas de rescate y rehabilitación de caballos de nuestra ONG.
               </p>
-              <p>
-                Fabricado con materiales de alta calidad, este producto está diseñado para durar y 
-                proporcionarte satisfacción mientras apoyas una buena causa.
-              </p>
             </div>
             
             <div className="product-detail-purchase">
@@ -81,30 +76,27 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
               
               <div className="product-detail-stock">
                 <span className="stock-label">Stock disponible:</span>
-                <span className={`stock-value ${stockAvailable < 5 ? 'low-stock' : ''}`}>
-                  {stockAvailable} {stockAvailable === 1 ? 'unidad' : 'unidades'}
+                <span className={`stock-value ${product.stock < 5 ? 'low-stock' : ''}`}>
+                  {product.stock} {product.stock === 1 ? 'unidad' : 'unidades'}
                 </span>
               </div>
               
               <button 
                 className="add-to-cart-detail-btn"
-                onClick={() => {
-                  addToCart(product);
-                  onClose();
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (product.stock > 0) {
+                    addToCart(product);
+                    onClose();
+                  } else {
+                    alert('Este producto está agotado');
+                  }
                 }}
+                disabled={product.stock <= 0}
+                type="button"
               >
-                Añadir al Carrito
+                {product.stock > 0 ? 'Añadir al Carrito' : 'Agotado'}
               </button>
-              
-              <div className="product-detail-category">
-                <span className="category-label">Categoría:</span>
-                <span className="category-value">
-                  {product.category === 'clothing' && 'Ropa'}
-                  {product.category === 'accessories' && 'Accesorios'}
-                  {product.category === 'supplies' && 'Comestibles'}
-                  {product.category === 'books' && 'Libros'}
-                </span>
-              </div>
             </div>
           </div>
         </div>

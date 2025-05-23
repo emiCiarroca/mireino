@@ -1,4 +1,3 @@
-// Importación de imágenes
 import Benito1 from "../assets/imagenes/Benito.webp";
 import Emilce1 from "../assets/imagenes/Emilce.webp";
 import Eros1 from "../assets/imagenes/Eros.webp";
@@ -11,7 +10,6 @@ import Salome1 from "../assets/imagenes/Salome.webp";
 import Torio1 from "../assets/imagenes/Torio.webp";
 import Zeus1 from "../assets/imagenes/Zeus.webp";
 
-// Datos de todos los caballos
 const horsesData = {
   Benito: {
     mainImage: Benito1,

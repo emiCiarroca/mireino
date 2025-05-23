@@ -15,7 +15,6 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
     description: []
   });
   
-  // Actualizar los datos del caballo cuando cambia el nombre
   useEffect(() => {
     if (horsesData[horseName]) {
       setHorseData({
@@ -30,51 +29,41 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
     setMainImage(img);
   };
   
-  // Función para cerrar con animación
   const closeWithAnimation = () => {
     setIsClosing(true);
-    // Esperar a que termine la animación antes de cerrar realmente
     setTimeout(() => {
       onClose();
-    }, 500); // Duración de la animación
+    }, 500);
   };
   
   const handleAdoptionRequest = () => {
     showMessage(`¡Gracias por tu interés en ${horseName}! Completa los datos de contacto.`, 'success');
     
-    // Redirigir a la sección de contacto
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      // Usar setTimeout para que el mensaje se muestre antes de la redirección
-      setTimeout(() => {
+    setTimeout(() => {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
         contactSection.scrollIntoView({ behavior: 'smooth' });
-      }, 999); // Tiempo de espera de la notificación
-    }
+      }
+    }, 999);
     
-    // Cerrar la sección después de mostrar el mensaje y redirigir
     setTimeout(() => {
       closeWithAnimation();
     }, 3000);
   };
   
   const handleShare = () => {
-    // Lógica para compartir
     if (navigator.share) {
       navigator.share({
         title: `${horseName} busca hogar`,
         text: `Conoce a ${horseName}, un hermoso caballo en adopción.`,
         url: window.location.href,
       }).then(() => {
-        // Cerrar después de compartir exitosamente
         closeWithAnimation();
-      }).catch(() => {
-        // Si hay error o el usuario cancela, no cerramos
-      });
+      }).catch(() => {});
     } else {
       showMessage('Enlace copiado al portapapeles', 'info');
       navigator.clipboard.writeText(window.location.href)
         .then(() => {
-          // Cerrar después de copiar al portapapeles
           setTimeout(() => {
             closeWithAnimation();
           }, 3000);
@@ -94,7 +83,6 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
         </div>
         
         <div className="horse-grid">
-          {/*Galería de imágenes */}
           <div className="horse-gallery">
             <img src={mainImage} alt={horseData.name} className="main-image" />
             <div className="thumbnail-container">
@@ -109,7 +97,6 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
               ))}
             </div>
           </div>
-          
           
           <div className="horse-info">
             <h3>{horseData.name}</h3>
@@ -144,7 +131,6 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
             </div>
           </div>
           
-          
           <div className="adoption-requirements">
             <h4>Requisitos para adoptar:</h4>
             <ul className="requirements-list">
@@ -155,7 +141,6 @@ function AdoptionSection({ showMessage, onClose, horseName = 'Benito' }) {
               <li>No destinarlo a competiciones de alto rendimiento</li>
             </ul>
           </div>
-          
           
           <div className="testimonial">
             <div className="testimonial-content">

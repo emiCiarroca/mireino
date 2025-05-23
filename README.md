@@ -1,76 +1,116 @@
-# Mi Reino por un Caballo - Web Oficial
+# 🐎 Mi Reino Por Un Caballo - Ecommerce Solidario
 
-## 📋 Descripción
-Sitio web oficial de la ONG "Mi Reino por un Caballo", dedicada al rescate y cuidado de caballos. Este proyecto presenta información sobre la organización, los caballos rescatados, servicios ofrecidos, y una tienda en línea donde se pueden adquirir productos para apoyar la causa.
+![Banner del Proyecto](./src/assets/imagenes/banner.webp)
 
-## 🌟 Características
-- **Sección Informativa**: Presenta la misión, visión y propósito de la ONG.
-- **Galería de Caballos**: Muestra los caballos rescatados junto con sus historias.
-- **Servicios**: Detalla los diferentes servicios que ofrece la organización.
-- **Tienda Online**: Venta de productos como remeras, velas, gorras, pines y stickers.
-- **Carrito de Compras**: Funcionalidad para agregar y quitar productos del carrito.
+**Plataforma de comercio electrónico para apoyar el rescate y rehabilitación de caballos**
 
-## 🛠️ Tecnologías Utilizadas
-- HTML5
-- CSS3
-- JavaScript
-- React
-- Node.js
-- Vite (como build tool)
+---
 
-## ⚙️ Requisitos Previos
-- Node.js (versión recomendada: 16.x o superior)
-- npm (normalmente viene con Node.js)
-- Git
+## 🚀 Tecnologías Principales
+- **React 18**
+- **Vite**
+- **React Router v6**
+- **CSS Modules**
 
-## 🚀 Instalación y Configuración
+---
 
-### Clonar el repositorio
+## 🌟 Características Actuales
+
+### 🛒 Funcionalidades de Ecommerce
+- Catálogo de productos con filtros por categorías
+- Carrito de compras persistente (localStorage)
+- Vista detallada de productos
+- Simulador de checkout (próximamente pasarela de pagos real)
+
+### 🐴 Componentes Solidarios
+- Galería interactiva de caballos rescatados
+- Sistema de donaciones integrado
+- Información transparente sobre el impacto social
+
+---
+
+## 🔮 Roadmap (Próximas Funcionalidades)
+
+### 🔐 Sistema de Autenticación *(Q4 2024)*
+- Login/Registro de usuarios
+- Recuperación de contraseña
+- Autenticación con redes sociales
+
+### 👨‍💼 Panel de Administración *(Q1 2025)*
+- ABM de productos
+- Gestión de órdenes
+- Dashboard analítico
+- Moderación de usuarios
+
+### 💳 Pasarela de Pagos *(Q2 2025)*
+- Integración con MercadoPago
+- Historial de compras
+- Suscripciones recurrentes para donaciones
+
+---
+
+## 🛠 Instalación Local
+
+1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/emiThrash/mireino.git
-cd mireino
+git clone https://github.com/tu-usuario/mi-reino-por-un-caballo.git
 ```
 
-### Instalar dependencias
+2. **Instalar dependencias**
 ```bash
 npm install
 ```
 
-### Iniciar el servidor de desarrollo
+3. **Configurar variables de entorno**
+Crear un archivo `.env.local` basado en `.env.example`
+
+4. **Ejecutar servidor de desarrollo**
 ```bash
 npm run dev
 ```
 
-### Compilar para producción
-```bash
-npm run build
+---
+
+## 📦 Estructura del Proyecto
+
+```
+src/
+├── assets/            # Recursos multimedia
+├── components/        # Componentes reutilizables
+├── data/              # Mock data y JSONs
+├── hooks/             # Custom hooks
+├── styles/            # Estilos globales
+├── App.jsx            # Componente raíz
+└── main.jsx           # Punto de entrada
 ```
 
-## 📁 Estructura del Proyecto
-```
-mireino/
-├── public/           # Archivos estáticos
-├── src/              # Código fuente
-│   ├── assets/       # Imágenes, fuentes, etc.
-│   ├── components/   # Componentes de React
-│   ├── context/      # Contextos de React (ej: carrito)
-│   ├── pages/        # Páginas principales
-│   ├── App.jsx       # Componente principal
-│   └── main.jsx      # Punto de entrada
-├── .gitignore        # Archivos ignorados por git
-├── package.json      # Dependencias y scripts
-└── README.md         # Este archivo
-```
+---
 
-## 🤝 Contribuciones
-Las contribuciones son bienvenidas. Si deseas contribuir:
-1. Haz un fork del proyecto
-2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`)
-3. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva funcionalidad'`)
-4. Sube tus cambios (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
+## 💚 Impacto Social
+
+Cada compra en nuestra plataforma contribuye directamente al **rescate y rehabilitación de caballos maltratados**.
+
+> _"Ningún acto de bondad, por pequeño que sea, es desperdiciado" - Esopo_
+
+---
+
+## 📌 Notas para Desarrolladores
+
+**Configuración recomendada:**
+- Node.js v18+
+- NPM v9+
+
+🗓 *Documentación actualizada: Mayo 2025*
+
+---
 
 ## 📞 Contacto
-Para más información sobre la ONG "Mi Reino por un Caballo" o sobre este proyecto, puedes:
-- Visitar nuestro sitio web: [mireino.com](https://mireino.netlify.app/)
-- Seguirnos en redes sociales: [@mireinoporloscaballos](https://instagram.com/mireinoporuncaballo)
+
+Para más información sobre la ONG **"Mi Reino por un Caballo"** o sobre este proyecto, podés:
+
+- 🌐 Visitar nuestro sitio web: [mireino.com](https://mireino.netlify.app/)
+- 📸 Seguirnos en Instagram: [@mireinoporloscaballos](https://instagram.com/mireinoporuncaballo)
+
+---
+
+**Este README se actualizará conforme avance el proyecto. ¡Gracias por tu interés en nuestra causa! 🐴💚**

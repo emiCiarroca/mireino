@@ -144,8 +144,6 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                 </>
               )}
             </div>
-
-            
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@
     will-change: transform; 
     contain: layout paint style;
     position: relative;
-    cursor: pointer; /* Mostrar cursor de puntero en toda la tarjeta */
+    cursor: pointer; 
 }
 
 .project-card:hover {

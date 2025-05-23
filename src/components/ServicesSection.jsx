@@ -74,7 +74,6 @@ const ServicesSection = () => {
         ))}
       </div>
       
-      {/* Componente de Detalle del Servicio */}
       <ServiceDetail
         isOpen={isServiceDetailOpen}
         onClose={closeServiceDetail}
