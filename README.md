@@ -109,7 +109,7 @@ Cada compra en nuestra plataforma contribuye directamente al **rescate y rehabil
 Para más información sobre la ONG **"Mi Reino por un Caballo"** o sobre este proyecto, podés:
 
 - 🌐 Visitar nuestro sitio web: [mireino.com](https://mireino.netlify.app/)
-- 📸 Seguirnos en Instagram: [@mireinoporloscaballos](https://instagram.com/mireinoporuncaballo)
+- 📸 Seguirnos en Instagram: [@mireinoporloscaballos](https://instagram.com/mi.reino.por.un.caballo)
 
 ---
 
