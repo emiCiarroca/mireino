@@ -60,7 +60,7 @@ const ShopSection = ({ showMessage }) => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await fetch('/data/products.json?t=' + Date.now());
+        const response = await fetch('/data/products.json');
         
         if (!response.ok) {
           throw new Error(`Error HTTP: ${response.status}`);
@@ -72,12 +72,22 @@ const ShopSection = ({ showMessage }) => {
           throw new Error('Formato de datos inválido: se esperaba un array');
         }
         
-        setProducts(data);
+        // Validar estructura de cada producto
+        const validatedProducts = data.map(product => ({
+          id: product.id || 0,
+          name: product.name || 'Producto sin nombre',
+          price: parseFloat(product.price) || 0,
+          category: product.category || 'other',
+          description: product.description || 'Sin descripción',
+          image: product.image || '/src/assets/imagenes/logo2.webp',
+          stock: parseInt(product.stock) || 0
+        }));
+        
+        setProducts(validatedProducts);
       } catch (err) {
         console.error('Error al cargar productos:', err);
         setError(err.message);
         showMessage(`Error al cargar productos: ${err.message}`, 'error');
-        setProducts([]);
       } finally {
         setIsLoading(false);
       }
@@ -91,8 +101,12 @@ const ShopSection = ({ showMessage }) => {
     : products.filter(product => product.category === selectedCategory);
   
   const handleAddToCart = useCallback((product) => {
-    const message = addToCart(product);
-    showMessage(message, 'success');
+    if (product.stock > 0) {
+      const message = addToCart(product);
+      showMessage(message, 'success');
+    } else {
+      showMessage('Este producto está agotado', 'error');
+    }
   }, [addToCart, showMessage]);
   
   const handleRemoveFromCart = useCallback((index) => {
@@ -107,8 +121,17 @@ const ShopSection = ({ showMessage }) => {
   
   const handleUpdateQuantity = useCallback((index, newQuantity) => {
     if (newQuantity < 1) return;
+    
+    const productInCart = cart[index];
+    const productInStock = products.find(p => p.id === productInCart.id);
+    
+    if (productInStock && newQuantity > productInStock.stock) {
+      showMessage(`No hay suficiente stock. Máximo disponible: ${productInStock.stock}`, 'error');
+      return;
+    }
+    
     updateQuantity(index, newQuantity);
-  }, [updateQuantity]);
+  }, [cart, products, updateQuantity, showMessage]);
 
   const openProductDetail = useCallback((product) => {
     setSelectedProduct(product);
@@ -145,7 +168,7 @@ const ShopSection = ({ showMessage }) => {
       <section id="shop" className="shop">
         <div className="container">
           <div className="error-message">
-            <p>{error}</p>
+            <p>Error al cargar los productos: {error}</p>
             <button 
               onClick={() => window.location.reload()} 
               className="btn retry-btn"

@@ -4,13 +4,14 @@ import '../styles/product-detail.css';
 const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
   const detailRef = useRef(null);
   
-  const productImages = [
-    product?.image,
-    product?.image, 
-    product?.image,
-    product?.image,
-    product?.image
-  ];
+  // Generar imágenes de ejemplo basadas en la imagen principal
+  const productImages = product ? [
+    product.image,
+    product.image, 
+    product.image,
+    product.image,
+    product.image
+  ] : [];
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,12 +48,26 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
         <div className="product-detail-content">
           <div className="product-detail-gallery">
             <div className="product-main-image">
-              <img src={product.image} alt={product.name} />
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/src/assets/imagenes/isotiporeino.webp';
+                }}
+              />
             </div>
             <div className="product-thumbnails">
               {productImages.map((img, index) => (
                 <div key={index} className="product-thumbnail">
-                  <img src={img} alt={`${product.name} vista ${index + 1}`} />
+                  <img 
+                    src={img} 
+                    alt={`${product.name} vista ${index + 1}`} 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/src/assets/imagenes/isotiporeino.webp';
+                    }}
+                  />
                 </div>
               ))}
             </div>

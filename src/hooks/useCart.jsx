@@ -26,14 +26,23 @@ export function useCart() {
       
       if (existingItemIndex >= 0) {
         const updatedCart = [...prevCart];
+        const newQuantity = updatedCart[existingItemIndex].quantity + 1;
+        
+        if (newQuantity > product.stock) {
+          return prevCart; // No actualizar si excede el stock
+        }
+        
         updatedCart[existingItemIndex] = {
           ...updatedCart[existingItemIndex],
-          quantity: updatedCart[existingItemIndex].quantity + 1
+          quantity: newQuantity
         };
         return updatedCart;
       }
       
-      return [...prevCart, { ...product, quantity: 1 }];
+      return [...prevCart, { 
+        ...product, 
+        quantity: 1 
+      }];
     });
     
     return `${product.name} añadido al carrito`;
