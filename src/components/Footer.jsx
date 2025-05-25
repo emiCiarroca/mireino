@@ -27,6 +27,7 @@ const Footer = ({ showMessage }) => {
               <li><a href="#services">Servicios</a></li>
               <li><a href="#shop">Tienda</a></li>
               <li><a href="#contact">Contacto</a></li>
+              
             </ul>
           </div>
           <div className="footer-column">

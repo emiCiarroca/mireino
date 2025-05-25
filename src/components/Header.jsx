@@ -82,8 +82,9 @@ function Header() {
               <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
               <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
               <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
-              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
+              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>            
               <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
+              <li className="admin-nav"><a href="/admin" className="admin-link"> Admin </a></li>
               <li className="social-nav">
                 <div className="social-icons">
                   <a href="https://www.instagram.com/mi.reino.por.un.caballo/" target="_blank" rel="noopener noreferrer" className="social-icon">
