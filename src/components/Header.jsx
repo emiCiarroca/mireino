@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/header.css';
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [currentPath, setCurrentPath] = useState('#');
   const [isMobile, setIsMobile] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,10 +23,6 @@ function Header() {
     const updateCurrentPath = () => {
       const hash = window.location.hash || '#';
       setCurrentPath(hash);
-      
-      if (!window.location.hash || window.location.hash === '#') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
     };
 
     checkMobile();
@@ -38,15 +39,36 @@ function Header() {
     };
   }, []);
 
-  const handleNavClick = (e, hash) => {
+  const handleNavClick = (e, path) => {
     e.preventDefault();
     
-    if (hash !== currentPath) {
-      window.history.pushState(null, '', hash);
-      
-      const targetElement = hash === '#' 
+    // Rutas especiales (login, admin, logout)
+    if (path.startsWith('/login') || path.startsWith('/admin')) {
+      navigate(path);
+      return;
+    }
+
+    if (path === '/logout') {
+      logout();
+      return;
+    }
+
+    // Si no estamos en la home, redirigir a home con el hash
+    if (location.pathname !== '/') {
+      if (path.startsWith('#')) {
+        navigate(`/${path}`);
+      } else {
+        navigate('/');
+      }
+      return;
+    }
+
+    // Manejo normal para la home
+    if (path !== currentPath) {
+      window.history.pushState(null, '', path);
+      const targetElement = path === '#' 
         ? document.body 
-        : document.querySelector(hash);
+        : document.querySelector(path);
       
       if (targetElement) {
         targetElement.scrollIntoView({ 
@@ -55,7 +77,7 @@ function Header() {
         });
       }
       
-      setCurrentPath(hash);
+      setCurrentPath(path);
     }
   };
 
@@ -82,9 +104,28 @@ function Header() {
               <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
               <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
               <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
-              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>            
+              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
               <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
-              <li className="admin-nav"><a href="/admin" className="admin-link"> Admin </a></li>
+              {user ? (
+                <>
+                  <li className="admin-nav">
+                    <a href="/admin" className="admin-link" onClick={(e) => handleNavClick(e, '/admin')}>
+                      <i className=""></i> Admin
+                    </a>
+                  </li>
+                  <li className="logout-nav">
+                    <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
+                      <i className=""></i> Salir
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li className="login-nav">
+                  <a href="/login" onClick={(e) => handleNavClick(e, '/login')}>
+                    <i className=""></i> Login
+                  </a>
+                </li>
+              )}
               <li className="social-nav">
                 <div className="social-icons">
                   <a href="https://www.instagram.com/mi.reino.por.un.caballo/" target="_blank" rel="noopener noreferrer" className="social-icon">
@@ -115,6 +156,16 @@ function Header() {
                 </a>
               </li>
             ))}
+            <li>
+              <a 
+                href={user ? '/admin' : '/login'} 
+                onClick={(e) => handleNavClick(e, user ? '/admin' : '/login')}
+                className={currentPath === (user ? '/admin' : '/login') ? 'active' : ''}
+              >
+                <i className={`nav-icon ${user ? 'fas fa-lock' : 'fas fa-sign-in-alt'}`}></i>
+                <span className="nav-text">{user ? 'Admin' : 'Login'}</span>
+              </a>
+            </li>
           </ul>
         </nav>
       )}

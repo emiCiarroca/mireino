@@ -1,11 +1,16 @@
 import { useAuth } from '../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+  const location = useLocation();
+
+  if (isLoading) {
+    return <div className="loading-spinner">Cargando...</div>;
+  }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;

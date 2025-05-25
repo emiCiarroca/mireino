@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProjectSection from './components/ProjectSection';
@@ -31,19 +31,20 @@ import './styles/admin.css';
 function Home({ showMessage, handleShowAdoption, showAdoption, currentHorse, handleCloseAdoption }) {
   return (
     <>
-      <Hero showMessage={showMessage} />
-      <ProjectSection showMessage={showMessage} onShowAdoption={handleShowAdoption} />
-      <AboutSection showMessage={showMessage} />
-      <ServicesSection />
+      <Hero id="home" showMessage={showMessage} />
+      <ProjectSection id="projects" showMessage={showMessage} onShowAdoption={handleShowAdoption} />
+      <AboutSection id="about" showMessage={showMessage} />
+      <ServicesSection id="services" />
       {showAdoption && (
         <AdoptionSection 
+          id="adoption"
           showMessage={showMessage} 
           onClose={handleCloseAdoption} 
           horseName={currentHorse}
         />
       )}
-      <ShopSection showMessage={showMessage} />
-      <ContactSection showMessage={showMessage} />
+      <ShopSection id="shop" showMessage={showMessage} />
+      <ContactSection id="contact" showMessage={showMessage} />
     </>
   );
 }
@@ -82,20 +83,26 @@ function App() {
       <Header />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={
-          <ProtectedRoute>
-            <Admin />
-          </ProtectedRoute>
-        } />
-        <Route path="/" element={
-          <Home 
-            showMessage={showMessage}
-            handleShowAdoption={handleShowAdoption}
-            showAdoption={showAdoption}
-            currentHorse={currentHorse}
-            handleCloseAdoption={handleCloseAdoption}
-          />
-        } />
+        <Route 
+          path="/admin" 
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/*" 
+          element={
+            <Home 
+              showMessage={showMessage}
+              handleShowAdoption={handleShowAdoption}
+              showAdoption={showAdoption}
+              currentHorse={currentHorse}
+              handleCloseAdoption={handleCloseAdoption}
+            />
+          } 
+        />
       </Routes>
       <Footer showMessage={showMessage} />
       {message.visible && <Message text={message.text} type={message.type} />}

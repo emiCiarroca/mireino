@@ -177,6 +177,35 @@ nav .main-nav li a:hover {
     opacity: 0.9;
 }
 
+.login-nav,
+.admin-nav,
+.logout-nav {
+  margin-left: 15px;
+}
+
+.login-link,
+.admin-link,
+.logout-link {
+  color: #4CAF50;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.login-link:hover,
+.admin-link:hover {
+  color: #45a049;
+}
+
+.logout-link {
+  color: #f44336;
+}
+
+.logout-link:hover {
+  color: #d32f2f;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     header.mobile-scrolled {
@@ -247,4 +276,14 @@ nav .main-nav li a:hover {
     .social-icons {
         gap: 12px;
     }
+}
+
+/* Ajustes para mobile */
+.mobile-nav-icons .nav-icon {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.mobile-nav-icons .nav-text {
+  font-size: 0.7rem;
 }

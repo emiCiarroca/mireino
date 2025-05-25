@@ -1,5 +1,6 @@
+// Login.jsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/login.css';
 
@@ -9,8 +10,11 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/admin';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,14 +27,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!credentials.email || !credentials.password) {
       setError('Por favor completa todos los campos');
       return;
     }
 
-    const success = login(credentials);
-    if (!success) {
+    const success = await login(credentials);
+    if (success) {
+      navigate(from, { replace: true });
+    } else {
       setError('Credenciales incorrectas');
     }
   };
@@ -63,8 +69,12 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" className="login-button">
-            Ingresar
+          <button 
+            type="submit" 
+            className="login-button"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
       </div>
