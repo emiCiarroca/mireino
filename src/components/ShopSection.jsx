@@ -12,8 +12,16 @@ const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
     onAddToCart(product);
   };
 
+  const handleCardClick = (e) => {
+    // Evitar que el click en el card active cuando se hace click en el botón
+    if (e.target.closest('.add-to-cart-btn')) {
+      return;
+    }
+    onViewDetail(product);
+  };
+
   return (
-    <div className="product-card" onClick={() => onViewDetail(product)}>
+    <div className="product-card" onClick={handleCardClick}>
       <div className="product-image">
         <img src={product.image} alt={product.name} loading="lazy" />
       </div>
@@ -150,6 +158,21 @@ const ShopSection = ({ showMessage }) => {
     setIsCartOpen(false);
   }, []);
 
+  const handleCategoryClick = useCallback((e, categoryId) => {
+    e.preventDefault();
+    setSelectedCategory(categoryId);
+  }, []);
+
+  const handleCartClick = useCallback((e) => {
+    e.preventDefault();
+    viewCart();
+  }, [viewCart]);
+
+  const handleRetryClick = useCallback((e) => {
+    e.preventDefault();
+    window.location.reload();
+  }, []);
+
   if (isLoading) {
     return (
       <section id="shop" className="shop">
@@ -170,8 +193,9 @@ const ShopSection = ({ showMessage }) => {
           <div className="error-message">
             <p>Error al cargar los productos: {error}</p>
             <button 
-              onClick={() => window.location.reload()} 
+              onClick={handleRetryClick}
               className="btn retry-btn"
+              type="button"
             >
               Reintentar
             </button>
@@ -198,7 +222,7 @@ const ShopSection = ({ showMessage }) => {
               <button 
                 key={category.id}
                 className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={(e) => handleCategoryClick(e, category.id)}
                 type="button"
               >
                 {category.name}
@@ -208,7 +232,7 @@ const ShopSection = ({ showMessage }) => {
           
           <button 
             className="cart-btn" 
-            onClick={viewCart}
+            onClick={handleCartClick}
             type="button"
           >
             Ver Carrito ({cartCount})

@@ -5,7 +5,7 @@
     "price": 1500.00,
     "category": "clothing",
     "description": "Camiseta 100% algodón orgánico con el logo de nuestra ONG.",
-    "image": "/src/assets/imagenes/camiseta.webp",
+    "image": "/assets/imagenes/camiseta.webp",
     "stock": 15
   },
   {
@@ -14,7 +14,7 @@
     "price": 39000.00,
     "category": "clothing",
     "description": "Buzo cálido y cómodo para los amantes de los caballos.",
-    "image": "/src/assets/imagenes/buzo.webp",
+    "image": "/assets/imagenes/buzo.webp",
     "stock": 8
   },
   {
@@ -23,7 +23,7 @@
     "price": 2800.00,
     "category": "clothing",
     "description": "Gorra con visera para protegerte del sol durante las actividades al aire libre.",
-    "image": "/src/assets/imagenes/gorra.webp",
+    "image": "/assets/imagenes/gorra.webp",
     "stock": 12
   },
   {
@@ -32,7 +32,7 @@
     "price": 500.00,
     "category": "accessories",
     "description": "Pulsera artesanal hecha por nuestros voluntarios.",
-    "image": "/src/assets/imagenes/pulsera.webp",
+    "image": "/assets/imagenes/pulsera.webp",
     "stock": 20
   },
   {
@@ -41,7 +41,7 @@
     "price": 800.00,
     "category": "accessories",
     "description": "Llavero con forma de caballo, cada compra ayuda a nuestros rescates.",
-    "image": "/src/assets/imagenes/llavero.webp",
+    "image": "/assets/imagenes/llavero.webp",
     "stock": 25
   },
   {
@@ -50,7 +50,7 @@
     "price": 2500.00,
     "category": "accessories",
     "description": "Botella ecológica con diseño de caballos salvajes.",
-    "image": "/src/assets/imagenes/botelladeagua.webp",
+    "image": "/assets/imagenes/botelladeagua.webp",
     "stock": 10
   },
   {
@@ -59,7 +59,7 @@
     "price": 2900.00,
     "category": "accessories",
     "description": "Vaso de plástico térmico con logo de nuestra ONG.",
-    "image": "/src/assets/imagenes/vasotermico.webp",
+    "image": "/assets/imagenes/vasotermico.webp",
     "stock": 7
   },
   {
@@ -68,7 +68,7 @@
     "price": 600.00,
     "category": "accessories",
     "description": "Calcomanias varias de caballos o logo ONG",
-    "image": "/src/assets/imagenes/sticker.webp",
+    "image": "/assets/imagenes/sticker.webp",
     "stock": 30
   },
   {
@@ -77,7 +77,7 @@
     "price": 1500.00,
     "category": "accessories",
     "description": "Botella x250cc aromas varios",
-    "image": "/src/assets/imagenes/botellajabon.webp",
+    "image": "/assets/imagenes/botellajabon.webp",
     "stock": 18
   },
   {
@@ -86,7 +86,7 @@
     "price": 500.00,
     "category": "accessories",
     "description": "Bolsa reutilizable, reforzada con diseño de nuestra ONG",
-    "image": "/src/assets/imagenes/bolsa.webp",
+    "image": "/assets/imagenes/bolsa.webp",
     "stock": 22
   },
   {
@@ -95,7 +95,7 @@
     "price": 2900.00,
     "category": "books",
     "description": "Cuadernillo con imágenes de caballos",
-    "image": "/src/assets/imagenes/cuadernillo.webp",
+    "image": "/assets/imagenes/cuadernillo.webp",
     "stock": 14
   },
   {
@@ -104,7 +104,7 @@
     "price": 12400.00,
     "category": "supplies",
     "description": "12 Empanadas de verduras",
-    "image": "/src/assets/imagenes/empanadas.webp",
+    "image": "/assets/imagenes/empanadas.webp",
     "stock": 5
   },
   {
@@ -113,7 +113,7 @@
     "price": 1900.00,
     "category": "accessories",
     "description": "Calendario con fotografías de nuestros caballos rescatados.",
-    "image": "/src/assets/imagenes/calendario.webp",
+    "image": "/assets/imagenes/calendario.webp",
     "stock": 3
   },
   {
@@ -122,7 +122,7 @@
     "price": 5400.00,
     "category": "accessories",
     "description": "Taza de cerámica con diseño exclusivo de nuestra ONG.",
-    "image": "/src/assets/imagenes/taza.webp",
+    "image": "/assets/imagenes/taza.webp",
     "stock": 9
   },
   {
@@ -131,7 +131,7 @@
     "price": 2900.00,
     "category": "books",
     "description": "Block de Hojas lisas para dibujo",
-    "image": "/src/assets/imagenes/blockdenotas.webp",
+    "image": "/assets/imagenes/blockdenotas.webp",
     "stock": 11
   },
   {
@@ -140,7 +140,7 @@
     "price": 3400.00,
     "category": "supplies",
     "description": "12 Riquísimos alfajores de maicena con dulce de leche",
-    "image": "/src/assets/imagenes/alfajores.webp",
+    "image": "/assets/imagenes/alfajores.webp",
     "stock": 6
   },
   {
@@ -149,7 +149,7 @@
     "price": 9000.00,
     "category": "clothing",
     "description": "Remera de algodón con el logo de nuestra organización.",
-    "image": "/src/assets/imagenes/musculosa.webp",
+    "image": "/assets/imagenes/musculosa.webp",
     "stock": 4
   },
   {
@@ -158,7 +158,7 @@
     "price": 1700.00,
     "category": "accessories",
     "description": "Vela artesanal con esencias variás",
-    "image": "/src/assets/imagenes/vela.webp",
+    "image": "/assets/imagenes/vela.webp",
     "stock": 8
   },
   {
@@ -167,7 +167,7 @@
     "price": 1100.00,
     "category": "accessories",
     "description": "Vaso de 500cc boca ancha con diseños",
-    "image": "/src/assets/imagenes/vasoplastico.webp",
+    "image": "/assets/imagenes/vasoplastico.webp",
     "stock": 15
   },
   {
@@ -176,7 +176,7 @@
     "price": 200.00,
     "category": "accessories",
     "description": "Circular, varios diseños",
-    "image": "/src/assets/imagenes/apoyavasos.webp",
+    "image": "/assets/imagenes/apoyavasos.webp",
     "stock": 20
   }
 ]
