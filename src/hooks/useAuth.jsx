@@ -35,11 +35,21 @@ export function useAuth() {
     }
   };
 
+  const register = async (userData) => {
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return true;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
     navigate('/login');
   };
 
-  return { user, isLoading, login, logout };
+  return { user, isLoading, login, register, logout };
 }

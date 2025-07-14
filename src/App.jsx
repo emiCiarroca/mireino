@@ -11,6 +11,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import Message from './components/Message';
 import Login from './components/Login';
+import Register from './components/Register';
 import Admin from './components/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -26,6 +27,7 @@ import './styles/product-detail.css';
 import './styles/service-detail.css';
 import './styles/adoption.css';
 import './styles/login.css';
+import './styles/register.css';
 import './styles/admin.css';
 
 function Home({ showMessage, handleShowAdoption, showAdoption, currentHorse, handleCloseAdoption }) {
@@ -82,7 +84,8 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login showMessage={showMessage} />} />
+        <Route path="/register" element={<Register showMessage={showMessage} />} />
         <Route 
           path="/admin" 
           element={

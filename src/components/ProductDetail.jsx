@@ -1,10 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import '../styles/product-detail.css';
 
 const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
   const detailRef = useRef(null);
-  
-  // Generar imágenes de ejemplo basadas en la imagen principal
+
   const productImages = product ? [
     product.image,
     product.image, 
@@ -13,6 +12,42 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
     product.image
   ] : [];
   
+  const handleClose = useCallback((e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    onClose();
+  }, [onClose]);
+
+  const handleOverlayClick = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }, [onClose]);
+
+  const handleContainerClick = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
+
+  const handleAddToCart = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product && product.stock > 0) {
+      addToCart(product);
+      onClose();
+    } else {
+      alert('Este producto está agotado');
+    }
+  }, [product, addToCart, onClose]);
+
+  const handleImageError = useCallback((e) => {
+    e.target.onerror = null;
+    e.target.src = '/src/assets/imagenes/isotiporeino.webp';
+  }, []);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (detailRef.current && !detailRef.current.contains(event.target)) {
@@ -20,25 +55,35 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
       }
     };
 
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
 
   if (!isOpen || !product) return null;
 
   return (
-    <div className="product-detail-overlay">
-      <div className="product-detail-container" ref={detailRef}>
+    <div className="product-detail-overlay" onClick={handleOverlayClick}>
+      <div className="product-detail-container" ref={detailRef} onClick={handleContainerClick}>
         <div className="product-detail-header">
           <h2>{product.name}</h2>
           <button 
             className="close-detail-btn" 
-            onClick={onClose}
+            onClick={handleClose}
             type="button"
           >
             ×
@@ -51,10 +96,7 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
               <img 
                 src={product.image} 
                 alt={product.name} 
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/src/assets/imagenes/isotiporeino.webp';
-                }}
+                onError={handleImageError}
               />
             </div>
             <div className="product-thumbnails">
@@ -63,10 +105,7 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
                   <img 
                     src={img} 
                     alt={`${product.name} vista ${index + 1}`} 
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/src/assets/imagenes/isotiporeino.webp';
-                    }}
+                    onError={handleImageError}
                   />
                 </div>
               ))}
@@ -98,15 +137,7 @@ const ProductDetail = ({ isOpen, onClose, product, addToCart }) => {
               
               <button 
                 className="add-to-cart-detail-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (product.stock > 0) {
-                    addToCart(product);
-                    onClose();
-                  } else {
-                    alert('Este producto está agotado');
-                  }
-                }}
+                onClick={handleAddToCart}
                 disabled={product.stock <= 0}
                 type="button"
               >

@@ -27,112 +27,106 @@
   .carousel-card {
     flex: 0 0 400px;
     scroll-snap-align: center;
-    transition: all 0.4s ease;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform-origin: center center;
     cursor: pointer;
     position: relative;
     padding: 5px;
-  }
-  
-  .carousel-card.active {
+}
+
+.carousel-card.active {
     transform: scale(1);
     z-index: 10;
-  }
-  
-  .carousel-card:not(.active) {
+}
+
+.carousel-card:not(.active) {
     transform: scale(0.85);
     opacity: 0.7;
-  }
-  
-  .carousel-card-inner {
+    filter: brightness(0.7);
+}
+
+.carousel-card-inner {
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: px;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 9px 10px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
   
   .carousel-card:hover .carousel-card-inner {
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-  
-  .carousel-card-image {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-5px);
+}
+
+.carousel-card-image {
     width: 100%;
     height: 250px;
     position: relative;
     overflow: hidden;
-  }
-  
-  .carousel-card-img {
+}
+
+.carousel-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .carousel-card:hover .carousel-card-img {
-    transform: scale(1.05);
-  }
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.carousel-card:hover .carousel-card-img {
+    transform: scale(1.1);
+}
   
   .carousel-card-name {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
     color: white;
-    padding: 10px 15px;
+    padding: 15px;
     font-size: 24px;
     font-weight: bold;
-  }
-  
-  .carousel-card-info {
+    transition: all 0.3s ease;
+}
+
+.carousel-card:hover .carousel-card-name {
+    padding-bottom: 20px;
+}
+
+.carousel-card-info {
     padding: 30px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-  }
-  
-  .carousel-card-info h3 {
+}
+
+.carousel-card-info h3 {
     font-size: 22px;
     margin-bottom: 15px;
-  }
+    transition: all 0.3s ease;
+}
   
-  .carousel-card-info p {
+  .carousel-card:hover .carousel-card-info h3 {
+    color: #fff;
+}
+
+.carousel-card-info p {
     color: #ffffff;
     margin-bottom: 20px;
     flex-grow: 1;
-  }
-  
-  /* Btn ver detalles en objetos services
-  .carousel-card-overlay {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #a1a1a1;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 500;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    margin-top: auto;
-  }
+}
+
+.carousel-card:hover .carousel-card-info p {
+    color: rgba(255,255,255,0.9);
+}
   
-  .carousel-card-overlay:after {
-    content: "→";
-    margin-left: 5px;
-    transition: all 0.3s ease;
-  }
-  
-  .carousel-card:hover .carousel-card-overlay {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .carousel-card:hover .carousel-card-overlay:after {
-    margin-left: 10px;
-  }*/
   
   .carousel-controls {
     display: flex;
@@ -154,12 +148,15 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-  }
-  
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
   .carousel-control-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
-  }
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
   
   .carousel-control-btn:disabled {
     opacity: 0.3;
@@ -175,20 +172,22 @@
   }
   
   .carousel-indicator {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
     padding: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-  }
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
   
   .carousel-indicator.active {
     background-color: rgba(255, 255, 255, 0.9);
     transform: scale(1.2);
   }
+
   
   @media (max-width: 768px) {
     .carousel-card {

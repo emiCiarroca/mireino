@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/service-detail.css';
 
 import veterinaryImg from '../assets/imagenes/veterinary.webp';
@@ -9,16 +9,42 @@ import therapyImg from '../assets/imagenes/therapy.webp';
 import educationImg from '../assets/imagenes/education.webp';
 
 const serviceImages = {
-  veterinary: veterinaryImg,
-  shelter: shelterImg,
-  nutrition: nutritionImg,
-  adoption: adoptionImg,
-  therapy: therapyImg,
-  education: educationImg
+  veterinary: [veterinaryImg, shelterImg, therapyImg],
+  shelter: [shelterImg, veterinaryImg, nutritionImg],
+  nutrition: [nutritionImg, shelterImg, veterinaryImg],
+  adoption: [adoptionImg, therapyImg, educationImg],
+  therapy: [therapyImg, adoptionImg, veterinaryImg],
+  education: [educationImg, adoptionImg, shelterImg]
 };
 
 const ServiceDetail = ({ isOpen, onClose, service }) => {
   const detailRef = useRef(null);
+  const galleryRef = useRef(null);
+  const [mainImage, setMainImage] = useState(0);
+
+  // Efecto para seguir la posición del mouse en las imágenes
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const images = document.querySelectorAll('.service-main-image, .service-thumbnail');
+      images.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        img.style.setProperty('--x', `${x}px`);
+        img.style.setProperty('--y', `${y}px`);
+      });
+    };
+
+    if (isOpen && galleryRef.current) {
+      galleryRef.current.addEventListener('mousemove', handleMouseMove);
+    }
+
+    return () => {
+      if (galleryRef.current) {
+        galleryRef.current.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,36 +53,71 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
       }
     };
 
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
 
+  const handleThumbnailClick = (index) => {
+    setMainImage(index);
+  };
+
   if (!isOpen || !service) return null;
 
-  const getServiceImage = () => {
-    return serviceImages[service.id] || veterinaryImg;
-  };
+  const currentImages = serviceImages[service.id] || [veterinaryImg];
 
   return (
     <div className="service-detail-overlay">
       <div className="service-detail-container" ref={detailRef}>
         <div className="service-detail-header">
           <h2>{service.title}</h2>
-          <button className="close-detail-btn" onClick={onClose}>×</button>
+          <button 
+            className="close-detail-btn" 
+            onClick={onClose}
+            aria-label="Cerrar detalle de servicio"
+          >
+            ×
+          </button>
         </div>
 
         <div className="service-detail-content">
-          <div className="service-detail-gallery">
+          <div className="service-detail-gallery" ref={galleryRef}>
             <div className="service-main-image">
               <img 
-                src={getServiceImage()} 
+                src={currentImages[mainImage]} 
                 alt={service.title} 
+                loading="lazy"
               />
+            </div>
+            
+            <div className="service-thumbnails">
+              {currentImages.map((img, index) => (
+                <div 
+                  key={index}
+                  className={`service-thumbnail ${mainImage === index ? 'active' : ''}`}
+                  onClick={() => handleThumbnailClick(index)}
+                >
+                  <img 
+                    src={img} 
+                    alt={`Miniatura ${index + 1} de ${service.title}`}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -143,6 +204,18 @@ const ServiceDetail = ({ isOpen, onClose, service }) => {
                   </ul>
                 </>
               )}
+            </div>
+
+            <div className="service-detail-footer">
+              <button className="contact-about-service">
+                Contactar sobre este servicio
+              </button>
+              <button className="adoption-process-btn">
+                Proceso de adopción
+              </button>
+              <button className="volunteer-service-btn">
+                Ser voluntario
+              </button>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState, useCallback, memo, useEffect } from 'react';
+import { useState, useCallback, memo, useEffect, useMemo } from 'react';
 import '../styles/shop.css';
 import Cart from './Cart';
 import ProductDetail from './ProductDetail';
@@ -6,19 +6,19 @@ import { categories } from '../data/categories';
 import { useCart } from '../hooks/useCart';
 
 const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
-  const handleAddToCartClick = (e) => {
+  const handleAddToCartClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
-  };
+  }, [product, onAddToCart]);
 
-  const handleCardClick = (e) => {
-    // Evitar que el click en el card active cuando se hace click en el botón
+  const handleCardClick = useCallback((e) => {
+    e.preventDefault();
     if (e.target.closest('.add-to-cart-btn')) {
       return;
     }
     onViewDetail(product);
-  };
+  }, [product, onViewDetail]);
 
   return (
     <div className="product-card" onClick={handleCardClick}>
@@ -34,8 +34,9 @@ const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
             className="add-to-cart-btn"
             onClick={handleAddToCartClick}
             type="button"
+            disabled={product.stock <= 0}
           >
-            Añadir
+            {product.stock > 0 ? 'Añadir' : 'Agotado'}
           </button>
         </div>
       </div>
@@ -50,7 +51,10 @@ const ShopSection = ({ showMessage }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+
   const {
     cart,
     cartCount,
@@ -80,7 +84,6 @@ const ShopSection = ({ showMessage }) => {
           throw new Error('Formato de datos inválido: se esperaba un array');
         }
         
-        // Validar estructura de cada producto
         const validatedProducts = data.map(product => ({
           id: product.id || 0,
           name: product.name || 'Producto sin nombre',
@@ -104,10 +107,29 @@ const ShopSection = ({ showMessage }) => {
     fetchProducts();
   }, [showMessage]);
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory);
-  
+  const filteredProducts = useMemo(() => {
+    let result = selectedCategory === 'all' 
+      ? products 
+      : products.filter(product => product.category === selectedCategory);
+
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(product => 
+        product.name.toLowerCase().includes(term) || 
+        product.description.toLowerCase().includes(term) ||
+        product.category.toLowerCase().includes(term)
+      );
+    }
+
+    return result;
+  }, [products, selectedCategory, searchTerm]);
+
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
   const handleAddToCart = useCallback((product) => {
     if (product.stock > 0) {
       const message = addToCart(product);
@@ -160,16 +182,34 @@ const ShopSection = ({ showMessage }) => {
 
   const handleCategoryClick = useCallback((e, categoryId) => {
     e.preventDefault();
+    e.stopPropagation();
     setSelectedCategory(categoryId);
+    setCurrentPage(1); // Reset to first page when changing category
+  }, []);
+
+  const handleSearchChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  }, []);
+
+  const handlePageChange = useCallback((page) => {
+    setCurrentPage(page);
+    // Smooth scroll to top of section
+    const shopSection = document.getElementById('shop');
+    if (shopSection) {
+      shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, []);
 
   const handleCartClick = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
     viewCart();
   }, [viewCart]);
 
   const handleRetryClick = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
     window.location.reload();
   }, []);
 
@@ -217,6 +257,16 @@ const ShopSection = ({ showMessage }) => {
         </div>
         
         <div className="shop-controls">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Buscar productos por nombre, descripción o categoría..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              aria-label="Buscar productos"
+            />
+          </div>
+          
           <div className="shop-categories">
             {categories.map(category => (
               <button 
@@ -235,13 +285,13 @@ const ShopSection = ({ showMessage }) => {
             onClick={handleCartClick}
             type="button"
           >
-            Ver Carrito ({cartCount})
+            <span>🛒</span> Carrito ({cartCount})
           </button>
         </div>
         
         <div className="shop-grid">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map(product => (
+          {currentProducts.length > 0 ? (
+            currentProducts.map(product => (
               <div key={product.id} className="product-wrapper">
                 <ProductCard
                   product={product}
@@ -254,10 +304,44 @@ const ShopSection = ({ showMessage }) => {
             <div className="no-products-message">
               {products.length === 0 
                 ? 'No se encontraron productos disponibles' 
-                : 'No hay productos en esta categoría'}
+                : 'No hay productos que coincidan con tu búsqueda'}
             </div>
           )}
         </div>
+
+        {filteredProducts.length > productsPerPage && (
+          <div className="pagination">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              type="button"
+              aria-label="Página anterior"
+            >
+              &laquo; Anterior
+            </button>
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={currentPage === page ? 'active' : ''}
+                type="button"
+                aria-label={`Ir a página ${page}`}
+              >
+                {page}
+              </button>
+            ))}
+            
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              type="button"
+              aria-label="Página siguiente"
+            >
+              Siguiente &raquo;
+            </button>
+          </div>
+        )}
       </div>
       
       <Cart 

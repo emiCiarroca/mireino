@@ -1,10 +1,9 @@
-// Login.jsx
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/login.css';
 
-const Login = () => {
+const Login = ({ showMessage }) => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -35,6 +34,7 @@ const Login = () => {
 
     const success = await login(credentials);
     if (success) {
+      showMessage('Inicio de sesión exitoso', 'success');
       navigate(from, { replace: true });
     } else {
       setError('Credenciales incorrectas');
@@ -77,6 +77,9 @@ const Login = () => {
             {isLoading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
+        <div className="register-link">
+          ¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
+        </div>
       </div>
     </div>
   );
