@@ -93,53 +93,60 @@ function Header() {
   ];
 
   return (
-    <>
-      <header className={headerClass}>
-        <div className="container">
-          <a href="#" className="logo" onClick={(e) => handleNavClick(e, '#')}>
-            Mi Reino
-          </a>
-          <nav className="desktop-nav">
-            <ul className="main-nav">
-              <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
-              <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
-              <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
-              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
-              <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
-              {user ? (
-                <>
-                  <li className="admin-nav">
-                    <a href="/admin" className="admin-link" onClick={(e) => handleNavClick(e, '/admin')}>
-                      <i className=""></i> Admin
-                    </a>
-                  </li>
-                  <li className="logout-nav">
-                    <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
-                      <i className=""></i> Salir
-                    </a>
-                  </li>
-                </>
-              ) : (
-                <li className="login-nav">
-                  <a href="/login" onClick={(e) => handleNavClick(e, '/login')}>
-                    <i className=""></i> Login
+  <>
+    <header className={headerClass}>
+      <div className="container">
+        <a href="#" className="logo" onClick={(e) => handleNavClick(e, '#')}>
+          Mi Reino
+        </a>
+        <nav className="desktop-nav">
+          <ul className="main-nav">
+            <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
+            <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
+            <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
+            <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
+            <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
+            {user ? (
+              <>
+                <li className="admin-nav">
+                  <a href="/admin" className="admin-link" onClick={(e) => handleNavClick(e, '/admin')}>
+                    <i className=""></i> Admin
                   </a>
                 </li>
-              )}
-              <li className="social-nav">
-                <div className="social-icons">
-                  <a href="https://www.instagram.com/mi.reino.por.un.caballo/" target="_blank" rel="noopener noreferrer" className="social-icon">
-                    <i className="fab fa-instagram"></i>
+                <li className="logout-nav">
+                  <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
+                    <i className=""></i> Salir
                   </a>
-                  <a href="https://www.facebook.com/mireinoporuncaballoparana" target="_blank" rel="noopener noreferrer" className="social-icon">
-                    <i className="fab fa-facebook-f"></i>
-                  </a>
-                </div>
+                </li>
+              </>
+            ) : (
+              <li className="login-nav">
+                <a href="/login" onClick={(e) => handleNavClick(e, '/login')}>
+                  <i className=""></i> Login
+                </a>
               </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+            )}
+            <li className="social-nav social-nav-separator"></li>
+            <li className="social-nav">
+              <a href="https://www.instagram.com/mi.reino.por.un.caballo/" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="social-icon">
+                <i className="fab fa-instagram"></i>
+              </a>
+            </li>
+            <li className="social-nav">
+              <a href="https://www.facebook.com/mireinoporuncaballoparana" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="social-icon">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
       
       {showMobileNav && (
         <nav className="mobile-bottom-nav">

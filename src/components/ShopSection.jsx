@@ -4,6 +4,7 @@ import Cart from './Cart';
 import ProductDetail from './ProductDetail';
 import { categories } from '../data/categories';
 import { useCart } from '../hooks/useCart';
+import Checkout from './Checkout';
 
 const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
   const handleAddToCartClick = useCallback((e) => {
@@ -54,6 +55,8 @@ const ShopSection = ({ showMessage }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const {
     cart,
@@ -64,8 +67,6 @@ const ShopSection = ({ showMessage }) => {
     clearCart,
     updateQuantity
   } = useCart();
-
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -124,7 +125,6 @@ const ShopSection = ({ showMessage }) => {
     return result;
   }, [products, selectedCategory, searchTerm]);
 
-  // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -180,21 +180,36 @@ const ShopSection = ({ showMessage }) => {
     setIsCartOpen(false);
   }, []);
 
+  const handleCheckout = useCallback(() => {
+    setIsCartOpen(false);
+    setShowCheckout(true);
+  }, []);
+
+  const handleCompletePurchase = useCallback(() => {
+    showMessage('¡Compra realizada con éxito! Gracias por tu apoyo.', 'success');
+    clearCart();
+    setShowCheckout(false);
+  }, [clearCart, showMessage]);
+
+  const handleBackToCart = useCallback(() => {
+    setShowCheckout(false);
+    setIsCartOpen(true);
+  }, []);
+
   const handleCategoryClick = useCallback((e, categoryId) => {
     e.preventDefault();
     e.stopPropagation();
     setSelectedCategory(categoryId);
-    setCurrentPage(1); // Reset to first page when changing category
+    setCurrentPage(1);
   }, []);
 
   const handleSearchChange = useCallback((e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   }, []);
 
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
-    // Smooth scroll to top of section
     const shopSection = document.getElementById('shop');
     if (shopSection) {
       shopSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -352,7 +367,17 @@ const ShopSection = ({ showMessage }) => {
         clearCart={handleClearCart}
         updateQuantity={handleUpdateQuantity}
         total={cartTotal}
+        onCheckout={handleCheckout}
       />
+
+      {showCheckout && (
+      <Checkout
+        cartItems={cart}
+        total={cartTotal}
+        onBackToCart={handleBackToCart}
+        onCompletePurchase={handleCompletePurchase}
+      />
+    )}
 
       <ProductDetail
         isOpen={isProductDetailOpen}

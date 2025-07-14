@@ -21,6 +21,7 @@ const CartItem = memo(({ item, onRemove, onUpdateQuantity }) => {
           <input
             type="number"
             min="1"
+            max={item.stock}
             value={item.quantity}
             onChange={handleQuantityChange}
             aria-label="Cantidad"
@@ -49,7 +50,8 @@ const Cart = ({
   removeItem, 
   clearCart, 
   updateQuantity,
-  total 
+  total,
+  onCheckout
 }) => {
   const cartRef = useRef(null);
 
@@ -136,6 +138,10 @@ const Cart = ({
                 </button>
                 <button 
                   className="btn checkout-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onCheckout();
+                  }}
                   type="button"
                 >
                   Proceder al Pago

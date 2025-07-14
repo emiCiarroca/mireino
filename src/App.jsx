@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProjectSection from './components/ProjectSection';
@@ -14,6 +14,9 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
+import { useCart } from './hooks/useCart';
 
 import './styles/index.css';
 import './styles/header.css';
@@ -23,6 +26,7 @@ import './styles/carousel-scale.css';
 import './styles/services.css';
 import './styles/shop.css';
 import './styles/cart.css';
+import './styles/checkout.css';
 import './styles/product-detail.css';
 import './styles/service-detail.css';
 import './styles/adoption.css';
@@ -55,6 +59,18 @@ function App() {
   const [message, setMessage] = useState({ text: '', type: '', visible: false });
   const [showAdoption, setShowAdoption] = useState(false);
   const [currentHorse, setCurrentHorse] = useState('');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  
+  const {
+    cart,
+    cartCount,
+    cartTotal,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart
+  } = useCart();
 
   const showMessage = (text, type = 'info') => {
     setMessage({ text, type, visible: true });
@@ -80,9 +96,19 @@ function App() {
     setCurrentHorse('');
   };
 
+  const handleCompletePurchase = () => {
+    showMessage('¡Compra realizada con éxito! Gracias por apoyar nuestra causa.', 'success');
+    clearCart();
+    setShowCheckout(false);
+    setIsCartOpen(false);
+  };
+
   return (
     <Router>
-      <Header />
+      <Header 
+        cartCount={cartCount} 
+        onCartClick={() => setIsCartOpen(true)} 
+      />
       <Routes>
         <Route path="/login" element={<Login showMessage={showMessage} />} />
         <Route path="/register" element={<Register showMessage={showMessage} />} />
@@ -107,6 +133,33 @@ function App() {
           } 
         />
       </Routes>
+      
+      <Cart 
+  isOpen={isCartOpen}
+  onClose={() => setIsCartOpen(false)}
+  cartItems={cart}
+  removeItem={removeFromCart}
+  clearCart={clearCart}
+  updateQuantity={updateQuantity}
+  total={cartTotal}
+  onCheckout={() => {
+    setIsCartOpen(false);
+    setShowCheckout(true);
+  }}
+/>
+      
+      {showCheckout && (
+        <Checkout
+          cartItems={cart}
+          total={cartTotal}
+          onBackToCart={() => {
+            setShowCheckout(false);
+            setIsCartOpen(true);
+          }}
+          onCompletePurchase={handleCompletePurchase}
+        />
+      )}
+      
       <Footer showMessage={showMessage} />
       {message.visible && <Message text={message.text} type={message.type} />}
     </Router>
