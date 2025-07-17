@@ -30,8 +30,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(30, 40, 36, 0.7);
-    z-index: -1;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: -3;
 }
 
 .hero-content {
@@ -67,7 +67,7 @@
 }
 
 .hero .btn:hover {
-    background-color: var(--verde-oscuro);
+    background-color: white;
 }
 
 /* Responsive */

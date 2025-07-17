@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/header.css';
 
-function Header() {
+function Header({ cartCount, onCartClick }) {
   const [scrolled, setScrolled] = useState(false);
   const [currentPath, setCurrentPath] = useState('#');
   const [isMobile, setIsMobile] = useState(false);
@@ -13,17 +13,14 @@ function Header() {
   const location = useLocation();
 
   const handlePopState = useCallback(() => {
-    // Si estamos en la home y hay un hash en la URL
     if (location.pathname === '/' && window.location.hash) {
       const targetElement = document.querySelector(window.location.hash);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (location.pathname !== '/') {
-      // Si no estamos en la home, volver al inicio
       navigate('/');
     } else {
-      // Si estamos en la home sin hash, hacer scroll al inicio
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [location.pathname, navigate]);
@@ -61,7 +58,6 @@ function Header() {
   const handleNavClick = (e, path) => {
     e.preventDefault();
     
-    // Rutas especiales (login, admin, logout)
     if (path.startsWith('/login') || path.startsWith('/admin')) {
       navigate(path);
       setIsMenuOpen(false);
@@ -74,7 +70,6 @@ function Header() {
       return;
     }
 
-    // Si no estamos en la home, redirigir a home con el hash
     if (location.pathname !== '/') {
       if (path.startsWith('#')) {
         navigate(`/${path}`);
@@ -85,9 +80,7 @@ function Header() {
       return;
     }
 
-    // Manejo normal para la home
     if (path !== currentPath) {
-      // Agregar al historial de navegación
       window.history.pushState({}, '', path);
       
       const targetElement = path === '#' 
@@ -109,6 +102,18 @@ function Header() {
   const toggleMenu = (e) => {
     e.preventDefault();
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleCartClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const shopSection = document.getElementById('shop');
+    if (shopSection) {
+      shopSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    setTimeout(() => {
+      onCartClick();
+    }, 100);
   };
 
   const headerClass = isMobile && scrolled ? "mobile-scrolled" : "";
@@ -161,6 +166,19 @@ function Header() {
                   </a>
                 </li>
               )}
+              <li className="cart-nav-item">
+                <a 
+                  href="#shop" 
+                  onClick={handleCartClick}
+                  className="cart-icon-link"
+                  aria-label="Carrito de compras"
+                >
+                  <i className="fas fa-shopping-cart"></i>
+                  {cartCount > 0 && (
+                    <span className="cart-count-badge">{cartCount}</span>
+                  )}
+                </a>
+              </li>
               <li className="social-nav social-nav-separator"></li>
               <li className="social-nav">
                 <a href="https://www.instagram.com/mi.reino.por.un.caballo/" 
@@ -194,6 +212,19 @@ function Header() {
               >
                 <i className="nav-icon fas fa-home"></i>
                 <span className="nav-text">Home</span>
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#shop" 
+                onClick={handleCartClick}
+                className="cart-icon-link"
+              >
+                <i className="nav-icon fas fa-shopping-cart"></i>
+                {cartCount > 0 && (
+                  <span className="cart-count-badge">{cartCount}</span>
+                )}
+                <span className="nav-text">Carrito</span>
               </a>
             </li>
             <li>

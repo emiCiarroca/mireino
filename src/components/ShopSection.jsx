@@ -1,9 +1,8 @@
 import { useState, useCallback, memo, useEffect, useMemo } from 'react';
 import '../styles/shop.css';
-import Cart from './Cart';
 import ProductDetail from './ProductDetail';
 import { categories } from '../data/categories';
-import { useCart } from '../hooks/useCart';
+import Cart from './Cart';
 import Checkout from './Checkout';
 
 const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
@@ -45,8 +44,18 @@ const ProductCard = memo(({ product, onAddToCart, onViewDetail }) => {
   );
 });
 
-const ShopSection = ({ showMessage }) => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+const ShopSection = ({ 
+  showMessage,
+  cart,
+  cartCount,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  updateQuantity,
+  cartTotal,
+  onCartClick
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState('all'); // Estado añadido
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
@@ -57,16 +66,6 @@ const ShopSection = ({ showMessage }) => {
   const productsPerPage = 8;
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
-
-  const {
-    cart,
-    cartCount,
-    cartTotal,
-    addToCart,
-    removeFromCart,
-    clearCart,
-    updateQuantity
-  } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -190,11 +189,6 @@ const ShopSection = ({ showMessage }) => {
     clearCart();
     setShowCheckout(false);
   }, [clearCart, showMessage]);
-
-  const handleBackToCart = useCallback(() => {
-    setShowCheckout(false);
-    setIsCartOpen(true);
-  }, []);
 
   const handleCategoryClick = useCallback((e, categoryId) => {
     e.preventDefault();
@@ -371,13 +365,16 @@ const ShopSection = ({ showMessage }) => {
       />
 
       {showCheckout && (
-      <Checkout
-        cartItems={cart}
-        total={cartTotal}
-        onBackToCart={handleBackToCart}
-        onCompletePurchase={handleCompletePurchase}
-      />
-    )}
+        <Checkout
+          cartItems={cart}
+          total={cartTotal}
+          onBackToCart={() => {
+            setShowCheckout(false);
+            setIsCartOpen(true);
+          }}
+          onCompletePurchase={handleCompletePurchase}
+        />
+      )}
 
       <ProductDetail
         isOpen={isProductDetailOpen}

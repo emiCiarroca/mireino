@@ -17,6 +17,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import { useCart } from './hooks/useCart';
+import Home from './components/Home';
 
 import './styles/index.css';
 import './styles/header.css';
@@ -33,27 +34,6 @@ import './styles/adoption.css';
 import './styles/login.css';
 import './styles/register.css';
 import './styles/admin.css';
-
-function Home({ showMessage, handleShowAdoption, showAdoption, currentHorse, handleCloseAdoption }) {
-  return (
-    <>
-      <Hero id="home" showMessage={showMessage} />
-      <ProjectSection id="projects" showMessage={showMessage} onShowAdoption={handleShowAdoption} />
-      <AboutSection id="about" showMessage={showMessage} />
-      <ServicesSection id="services" />
-      {showAdoption && (
-        <AdoptionSection 
-          id="adoption"
-          showMessage={showMessage} 
-          onClose={handleCloseAdoption} 
-          horseName={currentHorse}
-        />
-      )}
-      <ShopSection id="shop" showMessage={showMessage} />
-      <ContactSection id="contact" showMessage={showMessage} />
-    </>
-  );
-}
 
 function App() {
   const [message, setMessage] = useState({ text: '', type: '', visible: false });
@@ -129,24 +109,32 @@ function App() {
               showAdoption={showAdoption}
               currentHorse={currentHorse}
               handleCloseAdoption={handleCloseAdoption}
+              cart={cart}
+              cartCount={cartCount}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              clearCart={clearCart}
+              updateQuantity={updateQuantity}
+              cartTotal={cartTotal}
+              onCartClick={() => setIsCartOpen(true)}
             />
           } 
         />
       </Routes>
       
       <Cart 
-  isOpen={isCartOpen}
-  onClose={() => setIsCartOpen(false)}
-  cartItems={cart}
-  removeItem={removeFromCart}
-  clearCart={clearCart}
-  updateQuantity={updateQuantity}
-  total={cartTotal}
-  onCheckout={() => {
-    setIsCartOpen(false);
-    setShowCheckout(true);
-  }}
-/>
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cart}
+        removeItem={removeFromCart}
+        clearCart={clearCart}
+        updateQuantity={updateQuantity}
+        total={cartTotal}
+        onCheckout={() => {
+          setIsCartOpen(false);
+          setShowCheckout(true);
+        }}
+      />
       
       {showCheckout && (
         <Checkout
