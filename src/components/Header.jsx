@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/header.css';
@@ -11,6 +11,22 @@ function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handlePopState = useCallback(() => {
+    // Si estamos en la home y hay un hash en la URL
+    if (location.pathname === '/' && window.location.hash) {
+      const targetElement = document.querySelector(window.location.hash);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (location.pathname !== '/') {
+      // Si no estamos en la home, volver al inicio
+      navigate('/');
+    } else {
+      // Si estamos en la home sin hash, hacer scroll al inicio
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,6 +46,7 @@ function Header() {
     window.addEventListener("resize", checkMobile);
     window.addEventListener("scroll", onScroll);
     window.addEventListener("hashchange", updateCurrentPath);
+    window.addEventListener("popstate", handlePopState);
     
     updateCurrentPath();
 
@@ -37,8 +54,9 @@ function Header() {
       window.removeEventListener("resize", checkMobile);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("hashchange", updateCurrentPath);
+      window.removeEventListener("popstate", handlePopState);
     };
-  }, []);
+  }, [handlePopState]);
 
   const handleNavClick = (e, path) => {
     e.preventDefault();
@@ -69,7 +87,9 @@ function Header() {
 
     // Manejo normal para la home
     if (path !== currentPath) {
-      window.history.pushState(null, '', path);
+      // Agregar al historial de navegación
+      window.history.pushState({}, '', path);
+      
       const targetElement = path === '#' 
         ? document.body 
         : document.querySelector(path);
@@ -189,35 +209,35 @@ function Header() {
           </ul>
 
           {isMenuOpen && (
-  <div className="mobile-menu-dropdown">
-    <div className="mobile-menu-content">
-      <ul>
-        {navItems.map((item) => (
-          <li key={item.path}>
-            {item.external ? (
-              <a 
-                href={item.path} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="mobile-menu-item"
-              >
-                {item.text}
-              </a>
-            ) : (
-              <a 
-                href={item.path} 
-                onClick={(e) => handleNavClick(e, item.path)}
-                className="mobile-menu-item"
-              >
-                {item.text}
-              </a>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
+            <div className="mobile-menu-dropdown">
+              <div className="mobile-menu-content">
+                <ul>
+                  {navItems.map((item) => (
+                    <li key={item.path}>
+                      {item.external ? (
+                        <a 
+                          href={item.path} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="mobile-menu-item"
+                        >
+                          {item.text}
+                        </a>
+                      ) : (
+                        <a 
+                          href={item.path} 
+                          onClick={(e) => handleNavClick(e, item.path)}
+                          className="mobile-menu-item"
+                        >
+                          {item.text}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </nav>
       )}
     </>
