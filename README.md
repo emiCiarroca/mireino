@@ -35,31 +35,25 @@ Ecommerce con propósito social que convierte compras en ayuda directa para caba
 | Catálogo interactivo   | ✅ Producción| Filtros por categorías y precios |
 | Gestión de carrito     | ✅ Producción| Persistencia en localStorage     |
 | Vista de producto      | ✅ Producción| Galería de imágenes + detalles   |
-| Simulador de checkout  | 🚧 En desarrollo| Próxima integración con MPago |
 
 ### 🐴 Componentes Sociales
 - Galería de caballos rescatados con historias
-- Calculadora de impacto (ej: "1 producto = 3 días de alimento")
 - Sistema de donaciones directas
-
----
 
 ---
 
 ## 🔮 Roadmap (Próximas Funcionalidades)
 
-### 🔐 Sistema de Autenticación *(Q4 2024)*
+### 🔐 Sistema de Autenticación
 - Login/Registro de usuarios
-- Recuperación de contraseña
-- Autenticación con redes sociales
 
-### 👨‍💼 Panel de Administración *(Q1 2025)*
+### 👨‍💼 Panel de Administración 
 - ABM de productos
 - Gestión de órdenes
 - Dashboard analítico
 - Moderación de usuarios
 
-### 💳 Pasarela de Pagos *(Q2 2025)*
+### 💳 Pasarela de Pagos 
 - Integración con MercadoPago
 - Historial de compras
 - Suscripciones recurrentes para donaciones
