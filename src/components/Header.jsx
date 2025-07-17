@@ -7,6 +7,7 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [currentPath, setCurrentPath] = useState('#');
   const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,11 +46,13 @@ function Header() {
     // Rutas especiales (login, admin, logout)
     if (path.startsWith('/login') || path.startsWith('/admin')) {
       navigate(path);
+      setIsMenuOpen(false);
       return;
     }
 
     if (path === '/logout') {
       logout();
+      setIsMenuOpen(false);
       return;
     }
 
@@ -60,6 +63,7 @@ function Header() {
       } else {
         navigate('/');
       }
+      setIsMenuOpen(false);
       return;
     }
 
@@ -78,102 +82,142 @@ function Header() {
       }
       
       setCurrentPath(path);
+      setIsMenuOpen(false);
     }
+  };
+
+  const toggleMenu = (e) => {
+    e.preventDefault();
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const headerClass = isMobile && scrolled ? "mobile-scrolled" : "";
   const showMobileNav = isMobile;
 
   const navItems = [
-    { path: '#projects', icon: 'fas fa-horse', text: 'Equinos' },
-    { path: '#about', icon: 'fas fa-users', text: 'Nosotros' },
-    { path: '#services', icon: 'fas fa-hands-helping', text: 'Servicios' },
-    { path: '#shop', icon: 'fas fa-store', text: 'Tienda' },
-    { path: '#contact', icon: 'fas fa-envelope', text: 'Contacto' }
+    { path: '#projects', text: 'Equinos' },
+    { path: '#about', text: 'Nosotros' },
+    { path: '#services', text: 'Servicios' },
+    { path: '#shop', text: 'Tienda' },
+    { path: '#contact', text: 'Contacto' },
+    { path: user ? '/admin' : '/login', text: user ? 'Admin' : 'Login' },
+    { path: 'https://www.instagram.com/mi.reino.por.un.caballo/', text: 'Instagram', external: true },
+    { path: 'https://www.facebook.com/mireinoporuncaballoparana', text: 'Facebook', external: true }
   ];
 
   return (
-  <>
-    <header className={headerClass}>
-      <div className="container">
-        <a href="#" className="logo" onClick={(e) => handleNavClick(e, '#')}>
-          Mi Reino
-        </a>
-        <nav className="desktop-nav">
-          <ul className="main-nav">
-            <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
-            <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
-            <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
-            <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
-            <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
-            {user ? (
-              <>
-                <li className="admin-nav">
-                  <a href="/admin" className="admin-link" onClick={(e) => handleNavClick(e, '/admin')}>
-                    <i className=""></i> Admin
+    <>
+      <header className={headerClass}>
+        <div className="container">
+          {!isMobile && (
+            <a href="#" className="logo" onClick={(e) => handleNavClick(e, '#')}>
+              Mi Reino
+            </a>
+          )}
+          <nav className="desktop-nav">
+            <ul className="main-nav">
+              <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
+              <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
+              <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
+              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
+              <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
+              {user ? (
+                <>
+                  <li className="admin-nav">
+                    <a href="/admin" className="admin-link" onClick={(e) => handleNavClick(e, '/admin')}>
+                      <i className=""></i> Admin
+                    </a>
+                  </li>
+                  <li className="logout-nav">
+                    <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
+                      <i className=""></i> Salir
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li className="login-nav">
+                  <a href="/login" onClick={(e) => handleNavClick(e, '/login')}>
+                    <i className=""></i> Login
                   </a>
                 </li>
-                <li className="logout-nav">
-                  <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
-                    <i className=""></i> Salir
-                  </a>
-                </li>
-              </>
-            ) : (
-              <li className="login-nav">
-                <a href="/login" onClick={(e) => handleNavClick(e, '/login')}>
-                  <i className=""></i> Login
+              )}
+              <li className="social-nav social-nav-separator"></li>
+              <li className="social-nav">
+                <a href="https://www.instagram.com/mi.reino.por.un.caballo/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="social-icon">
+                  <i className="fab fa-instagram"></i>
                 </a>
               </li>
-            )}
-            <li className="social-nav social-nav-separator"></li>
-            <li className="social-nav">
-              <a href="https://www.instagram.com/mi.reino.por.un.caballo/" 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
-                 className="social-icon">
-                <i className="fab fa-instagram"></i>
-              </a>
-            </li>
-            <li className="social-nav">
-              <a href="https://www.facebook.com/mireinoporuncaballoparana" 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
-                 className="social-icon">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+              <li className="social-nav">
+                <a href="https://www.facebook.com/mireinoporuncaballoparana" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="social-icon">
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
       
       {showMobileNav && (
         <nav className="mobile-bottom-nav">
           <ul className="mobile-nav-icons">
-            {navItems.map((item) => (
-              <li key={item.path}>
-                <a 
-                  href={item.path} 
-                  onClick={(e) => handleNavClick(e, item.path)}
-                  className={currentPath === item.path ? 'active' : ''}
-                >
-                  <i className={`nav-icon ${item.icon}`}></i>
-                  <span className="nav-text">{item.text}</span>
-                </a>
-              </li>
-            ))}
             <li>
               <a 
-                href={user ? '/admin' : '/login'} 
-                onClick={(e) => handleNavClick(e, user ? '/admin' : '/login')}
-                className={currentPath === (user ? '/admin' : '/login') ? 'active' : ''}
+                href="#" 
+                onClick={(e) => handleNavClick(e, '#')}
+                className={currentPath === '#' ? 'active' : ''}
               >
-                <i className={`nav-icon ${user ? 'fas fa-lock' : 'fas fa-sign-in-alt'}`}></i>
-                <span className="nav-text">{user ? 'Admin' : 'Login'}</span>
+                <i className="nav-icon fas fa-home"></i>
+                <span className="nav-text">Home</span>
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#" 
+                onClick={toggleMenu}
+                className={isMenuOpen ? 'active' : ''}
+              >
+                <i className="nav-icon fas fa-bars"></i>
+                <span className="nav-text">Menú</span>
               </a>
             </li>
           </ul>
+
+          {isMenuOpen && (
+  <div className="mobile-menu-dropdown">
+    <div className="mobile-menu-content">
+      <ul>
+        {navItems.map((item) => (
+          <li key={item.path}>
+            {item.external ? (
+              <a 
+                href={item.path} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="mobile-menu-item"
+              >
+                {item.text}
+              </a>
+            ) : (
+              <a 
+                href={item.path} 
+                onClick={(e) => handleNavClick(e, item.path)}
+                className="mobile-menu-item"
+              >
+                {item.text}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
         </nav>
       )}
     </>

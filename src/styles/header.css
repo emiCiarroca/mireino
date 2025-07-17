@@ -116,12 +116,13 @@ nav .main-nav li a:hover {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(42, 58, 53, 0.98);
-    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.25);
+    background-color: rgba(42, 58, 53, 0.7);
+    backdrop-filter: blur(15px);
     z-index: 1000;
-    padding: 8px 0;
-    height: 70px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 0;
+    height: 80px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px 20px 0 0;
 }
 
 .mobile-nav-icons {
@@ -183,6 +184,71 @@ nav .main-nav li a:hover {
     color: white;
 }
 
+/* Menú desplegable móvil */
+.mobile-menu-dropdown {
+    position: fixed;
+    bottom: 80px;
+    right: 15px;
+    width: 85%;
+    max-width: 300px;
+    background-color: rgba(42, 58, 53, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform-origin: bottom right;
+    animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    overflow: hidden;
+    z-index: 999;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu-content {
+    padding: 20px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.mobile-menu-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobile-menu-dropdown li {
+    margin: 0;
+}
+
+.mobile-menu-item {
+    display: block;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: rgba(255,255,255,0.05);
+}
+
+.mobile-menu-item:hover {
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    transform: translateX(5px);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     header {
@@ -200,7 +266,8 @@ nav .main-nav li a:hover {
     
     /* Mostrar barra de navegación inferior */
     .mobile-bottom-nav {
-        display: block;
+        display: flex;
+        flex-direction: column;
     }
     
     body {
@@ -209,19 +276,19 @@ nav .main-nav li a:hover {
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 6px 0;
+    .mobile-bottom-nav {
+        height: 75px;
+        padding: 10px 0;
     }
     
-    .logo {
-        font-size: 1.2rem;
+    .mobile-menu-dropdown {
+        bottom: 75px;
+        width: 90%;
+        right: 10px;
     }
     
-    .mobile-nav-icons li a .nav-icon {
-        font-size: 1.3rem;
-    }
-    
-    .mobile-nav-icons li a .nav-text {
-        font-size: 0.6rem;
+    .mobile-menu-item {
+        padding: 10px 15px;
+        font-size: 0.9rem;
     }
 }
