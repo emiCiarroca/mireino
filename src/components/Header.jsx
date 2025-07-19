@@ -12,18 +12,24 @@ function Header({ cartCount, onCartClick }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handlePopState = useCallback(() => {
-    if (location.pathname === '/' && window.location.hash) {
-      const targetElement = document.querySelector(window.location.hash);
+  const handlePopState = useCallback((e) => {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+
+    if (path === '/' && hash) {
+      // Navegación entre secciones con hash
+      const targetElement = document.querySelector(hash);
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
       }
-    } else if (location.pathname !== '/') {
-      navigate('/');
+    } else if (path !== '/') {
+      // Navegación a rutas como /login, /admin, etc.
+      navigate(path);
     } else {
+      // Volver a la página de inicio (sin hash)
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [location.pathname, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -58,24 +64,14 @@ function Header({ cartCount, onCartClick }) {
   const handleNavClick = (e, path) => {
     e.preventDefault();
     
-    if (path.startsWith('/login') || path.startsWith('/admin')) {
+    if (path.startsWith('/login') || path.startsWith('/admin') || path.startsWith('/logout')) {
       navigate(path);
       setIsMenuOpen(false);
       return;
     }
 
-    if (path === '/logout') {
-      logout();
-      setIsMenuOpen(false);
-      return;
-    }
-
     if (location.pathname !== '/') {
-      if (path.startsWith('#')) {
-        navigate(`/${path}`);
-      } else {
-        navigate('/');
-      }
+      navigate('/');
       setIsMenuOpen(false);
       return;
     }
