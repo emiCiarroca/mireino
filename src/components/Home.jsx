@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from './Hero';
 import ProjectSection from './ProjectSection';
 import AboutSection from './AboutSection';
@@ -22,6 +22,23 @@ function Home({
   cartTotal,
   onCartClick
 }) {
+
+  // Manejar la navegación
+  useEffect(() => {
+    const handleInitialHash = () => {
+      if (window.location.hash) {
+        const targetElement = document.querySelector(window.location.hash);
+        if (targetElement) {
+          setTimeout(() => {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+      }
+    };
+
+    handleInitialHash();
+  }, []);
+
   return (
     <>
       <Hero id="home" showMessage={showMessage} />

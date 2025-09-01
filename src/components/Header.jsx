@@ -22,12 +22,14 @@ function Header({ cartCount, onCartClick }) {
       if (targetElement) {
         targetElement.scrollIntoView({ behavior: 'smooth' });
       }
+      setCurrentPath(hash);
     } else if (path !== '/') {
       // Navegación a rutas como /login, /admin, etc.
       navigate(path);
     } else {
       // Volver a la página de inicio (sin hash)
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      setCurrentPath('#');
     }
   }, [navigate]);
 
@@ -72,27 +74,45 @@ function Header({ cartCount, onCartClick }) {
 
     if (location.pathname !== '/') {
       navigate('/');
-      setIsMenuOpen(false);
+      setTimeout(() => {
+        if (path !== '#') {
+          const targetElement = document.querySelector(path);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            window.history.pushState({ section: path }, '', path);
+            setCurrentPath(path);
+          }
+        }
+        setIsMenuOpen(false);
+      }, 100);
       return;
     }
 
     if (path !== currentPath) {
-      window.history.pushState({}, '', path);
-      
-      const targetElement = path === '#' 
-        ? document.body 
-        : document.querySelector(path);
-      
-      if (targetElement) {
-        targetElement.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
+      if (path === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.history.pushState({ section: 'home' }, '', '/');
+      } else {
+        const targetElement = document.querySelector(path);
+        if (targetElement) {
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+          window.history.pushState({ section: path }, '', path);
+        }
       }
       
       setCurrentPath(path);
       setIsMenuOpen(false);
     }
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    setIsMenuOpen(false);
+    showMessage('Sesión cerrada correctamente', 'success');
   };
 
   const toggleMenu = (e) => {
@@ -106,6 +126,8 @@ function Header({ cartCount, onCartClick }) {
     const shopSection = document.getElementById('shop');
     if (shopSection) {
       shopSection.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState({ section: '#shop' }, '', '#shop');
+      setCurrentPath('#shop');
     }
     setTimeout(() => {
       onCartClick();
@@ -116,6 +138,7 @@ function Header({ cartCount, onCartClick }) {
   const showMobileNav = isMobile;
 
   const navItems = [
+    { path: '#', text: 'Inicio' },
     { path: '#projects', text: 'Equinos' },
     { path: '#about', text: 'Nosotros' },
     { path: '#services', text: 'Servicios' },
@@ -125,6 +148,11 @@ function Header({ cartCount, onCartClick }) {
     { path: 'https://www.instagram.com/mi.reino.por.un.caballo/', text: 'Instagram', external: true },
     { path: 'https://www.facebook.com/mireinoporuncaballoparana', text: 'Facebook', external: true }
   ];
+
+  
+  const showMessage = (text, type = 'info') => {
+    console.log(`${type}: ${text}`);
+  };
 
   return (
     <>
@@ -137,11 +165,11 @@ function Header({ cartCount, onCartClick }) {
           )}
           <nav className="desktop-nav">
             <ul className="main-nav">
-              <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Equinos</a></li>
-              <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>Nosotros</a></li>
-              <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')}>Servicios</a></li>
-              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')}>Tienda</a></li>
-              <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contacto</a></li>
+              <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')} className={currentPath === '#projects' ? 'active' : ''}>Equinos</a></li>
+              <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')} className={currentPath === '#about' ? 'active' : ''}>Nosotros</a></li>
+              <li><a href="#services" onClick={(e) => handleNavClick(e, '#services')} className={currentPath === '#services' ? 'active' : ''}>Servicios</a></li>
+              <li><a href="#shop" onClick={(e) => handleNavClick(e, '#shop')} className={currentPath === '#shop' ? 'active' : ''}>Tienda</a></li>
+              <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className={currentPath === '#contact' ? 'active' : ''}>Contacto</a></li>
               {user ? (
                 <>
                   <li className="admin-nav">
@@ -150,7 +178,7 @@ function Header({ cartCount, onCartClick }) {
                     </a>
                   </li>
                   <li className="logout-nav">
-                    <a href="/logout" onClick={(e) => handleNavClick(e, '/logout')}>
+                    <a href="/logout" onClick={handleLogout}>
                       <i className=""></i> Salir
                     </a>
                   </li>
@@ -254,13 +282,24 @@ function Header({ cartCount, onCartClick }) {
                         <a 
                           href={item.path} 
                           onClick={(e) => handleNavClick(e, item.path)}
-                          className="mobile-menu-item"
+                          className={`mobile-menu-item ${currentPath === item.path ? 'active' : ''}`}
                         >
                           {item.text}
                         </a>
                       )}
                     </li>
                   ))}
+                  {user && (
+                    <li>
+                      <a 
+                        href="#logout" 
+                        onClick={handleLogout}
+                        className="mobile-menu-item"
+                      >
+                        Cerrar Sesión
+                      </a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>

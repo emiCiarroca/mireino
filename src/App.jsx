@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProjectSection from './components/ProjectSection';
@@ -67,6 +67,8 @@ function App() {
       const adoptionSection = document.getElementById('adoption');
       if (adoptionSection) {
         adoptionSection.scrollIntoView({ behavior: 'smooth' });
+        // Agregar al historial de navegacion
+        window.history.pushState({ section: '#adoption' }, '', '#adoption');
       }
     }, 100);
   };
@@ -74,6 +76,8 @@ function App() {
   const handleCloseAdoption = () => {
     setShowAdoption(false);
     setCurrentHorse('');
+    // Volver al historial anterior
+    window.history.back();
   };
 
   const handleCompletePurchase = () => {
@@ -82,6 +86,32 @@ function App() {
     setShowCheckout(false);
     setIsCartOpen(false);
   };
+
+  // Manejar el botón "Atrás" físico en dispositivos móviles
+  useEffect(() => {
+    const handleBackButton = (e) => {
+      // Si estamos en una sección específica (no en el home)
+      if (window.location.hash && window.location.hash !== '#') {
+        e.preventDefault();
+        // Volver al home
+        window.history.back();
+      }
+    };
+
+    // Para dispositivos Android (Cordova/PhoneGap)
+    if (typeof window !== 'undefined' && window.Android) {
+      document.addEventListener('backbutton', handleBackButton);
+    }
+    
+    // Agregar estado inicial al historial
+    window.history.replaceState({ section: 'home' }, '', window.location.pathname);
+    
+    return () => {
+      if (typeof window !== 'undefined' && window.Android) {
+        document.removeEventListener('backbutton', handleBackButton);
+      }
+    };
+  }, []);
 
   return (
     <Router>
